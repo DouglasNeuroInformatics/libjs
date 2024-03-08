@@ -31,5 +31,5 @@ export function yearsPassed(date: Date): number {
  * ```
  */
 export async function sleep(seconds: number) {
-  return new Promise((resolve) => setTimeout(resolve, seconds / 1000));
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
