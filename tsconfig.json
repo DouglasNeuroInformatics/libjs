@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "checkJs": true,
+    "esModuleInterop": false,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "maxNodeModuleJsDepth": 0,
+    "module": "Node16",
+    "moduleDetection": "force",
+    "moduleResolution": "Node16",
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "verbatimModuleSyntax": true
+  },
+  "include": ["src/**/*"]
+}
