@@ -7,4 +7,7 @@ describe('range', () => {
     const arr = range(10);
     expect(arr.length).toBe(10);
   });
+  it('should throw an error if the start is equal to the end', () => {
+    expect(() => range(1, 1)).toThrow();
+  });
 });

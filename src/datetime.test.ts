@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { toBasicISOString, yearsPassed } from './datetime.js';
+import { sleep, toBasicISOString, yearsPassed } from './datetime.js';
 
 describe('toBasicISOString', () => {
   it('should return a string of the format yyyy-mm-dd', () => {
@@ -18,5 +18,14 @@ describe('yearsPassed', () => {
     const today = new Date();
     const date = new Date(today.setMonth(today.getMonth() - 18));
     expect(yearsPassed(date)).toBe(1);
+  });
+});
+
+describe('sleep', () => {
+  it('should wait for at least the specified time', async () => {
+    const start = Date.now();
+    await sleep(0.2);
+    const end = Date.now();
+    expect(end - start).toBeGreaterThanOrEqual(200);
   });
 });
