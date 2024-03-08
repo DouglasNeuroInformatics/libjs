@@ -7,7 +7,7 @@
   <p align="center">
     A collection of utility functions and types for Node.js and the browser
     <br />
-    <a href="https://github.com/DouglasNeuroInformatics/LibJS">
+    <a href="https://douglasneuroinformatics.github.io/LibJS/">
       <strong>Explore the docs »
       </strong>
     </a>
