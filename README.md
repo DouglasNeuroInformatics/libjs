@@ -1,37 +1,33 @@
 <!-- PROJECT LOGO -->
 <div align="center">
-  <a href="https://github.com/DouglasNeuroInformatics/LibJS">
-    <img src=".github/assets/libjs-logo.png" alt="Logo" width="100" >
+  <a href="https://github.com/DouglasNeuroInformatics/libjs">
+    <img src="https://raw.githubusercontent.com/DouglasNeuroInformatics/libjs/main/.github/assets/libjs-logo.png" alt="Logo" width="100" >
   </a>
-  <h3 align="center">DNP LibJS</h3>
+  <h3 align="center">@douglasneuroinformatics/libjs</h3>
   <p align="center">
     A collection of utility functions and types for Node.js and the browser
     <br />
-    <a href="https://douglasneuroinformatics.github.io/LibJS/">
+    <a href="https://douglasneuroinformatics.github.io/libjs/">
       <strong>Explore the docs »
       </strong>
     </a>
     <br />
     <br />
-    <a href="https://github.com/DouglasNeuroInformatics/LibJS/issues" rel="noreferrer" target="_blank">Report Bug</a>
+    <a href="https://github.com/DouglasNeuroInformatics/libjs/issues" rel="noreferrer" target="_blank">Report Bug</a>
     ·
-    <a href="https://github.com/DouglasNeuroInformatics/LibJS/issues" rel="noreferrer" target="_blank">Request Feature</a>
+    <a href="https://github.com/DouglasNeuroInformatics/libjs/issues" rel="noreferrer" target="_blank">Request Feature</a>
   </p>
 </div>
 
 <!-- PROJECT SHIELDS -->
 <div align="center">
 
-![license](https://img.shields.io/github/license/DouglasNeuroInformatics/LibJS)
-![version](https://img.shields.io/github/package-json/v/DouglasNeuroInformatics/LibJS)
-[![codecov](https://codecov.io/gh/DouglasNeuroInformatics/LibJS/graph/badge.svg?token=J9XY9jkGs1)](https://codecov.io/gh/DouglasNeuroInformatics/LibJS)
+![license](https://img.shields.io/github/license/DouglasNeuroInformatics/libjs)
+![version](https://img.shields.io/github/package-json/v/DouglasNeuroInformatics/libjs)
+[![codecov](https://codecov.io/gh/DouglasNeuroInformatics/libjs/graph/badge.svg?token=J9XY9jkGs1)](https://codecov.io/gh/DouglasNeuroInformatics/libjs)
 
 </div>
 <hr />
-
-## About
-
-DNP LibJS is a small library of basic utilities, intended to minimize code duplication across DNP projects.
 
 ## Installation
 
