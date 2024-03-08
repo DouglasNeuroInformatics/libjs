@@ -5,13 +5,13 @@
   "packageManager": "pnpm@8.15.3",
   "description": "A collection of utility functions and types for Node.js and the browser",
   "license": "LGPL-3.0",
-  "homepage": "https://github.com/DouglasNeuroInformatics/LibJS/#readme",
+  "homepage": "https://github.com/DouglasNeuroInformatics/libjs/#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DouglasNeuroInformatics/LibJS/.git"
+    "url": "git+https://github.com/DouglasNeuroInformatics/libjs/.git"
   },
   "bugs": {
-    "url": "https://github.com/DouglasNeuroInformatics/LibJS//issues"
+    "url": "https://github.com/DouglasNeuroInformatics/libjs/issues"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
