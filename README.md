@@ -5,7 +5,7 @@
   </a>
   <h3 align="center">DNP LibJS</h3>
   <p align="center">
-    A collection of zero dependency JavaScript utility functions for Node.js and the browser
+    A collection of utility functions and types for Node.js and the browser
     <br />
     <a href="https://github.com/DouglasNeuroInformatics/LibJS">
       <strong>Explore the docs »
