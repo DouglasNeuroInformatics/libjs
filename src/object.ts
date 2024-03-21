@@ -11,3 +11,36 @@ export function deepFreeze<T extends object>(obj: T): ReadonlyDeep<T> {
   });
   return Object.freeze(obj);
 }
+
+/**
+ * Checks if `value` is the [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ */
+export function isObject(value: unknown): value is object {
+  const type = typeof value;
+  return value !== null && (type === 'object' || type === 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ */
+export function isObjectLike(value: unknown): value is object {
+  return value !== null && typeof value === 'object';
+}
+
+/**
+ * Checks if `value` is a plain object. An object is plain if it is created by either
+ * `{}`, `new Object()`, or `Object.create(null)`.
+ */
+export function isPlainObject(value: unknown): value is Record<string, unknown> {
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+  const prototype = Object.getPrototypeOf(value);
+  return (
+    (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) &&
+    !(Symbol.toStringTag in value) &&
+    !(Symbol.iterator in value)
+  );
+}
