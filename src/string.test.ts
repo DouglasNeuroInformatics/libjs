@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { camelToSnakeCase, capitalize, snakeToCamelCase, uncapitalize } from './string.js';
+import { camelToSnakeCase, capitalize, snakeToCamelCase, toLowerCase, toUpperCase, uncapitalize } from './string.js';
 
 describe('camelToSnakeCase', () => {
   it('should convert from camel to snake case ', () => {
@@ -31,5 +31,17 @@ describe('uncapitalize', () => {
     expect(uncapitalize('Foo')).toBe('foo');
     expect(uncapitalize('foo')).toBe('foo');
     expect(uncapitalize('Foo bar')).toBe('foo bar');
+  });
+});
+
+describe('toLowerCase', () => {
+  it('should convert to lower case', () => {
+    expect(toLowerCase('FOO')).toBe('foo');
+  });
+});
+
+describe('toUpperCase', () => {
+  it('should convert to upper case', () => {
+    expect(toUpperCase('foo')).toBe('FOO');
   });
 });

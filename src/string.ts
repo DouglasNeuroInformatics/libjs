@@ -17,3 +17,11 @@ export function uncapitalize<T extends string>(s: T) {
 export function capitalize<T extends string>(s: T) {
   return (s.charAt(0).toUpperCase() + s.slice(1)) as Capitalize<T>;
 }
+
+export function toLowerCase<T extends string>(s: T) {
+  return s.toLowerCase() as Lowercase<T>;
+}
+
+export function toUpperCase<T extends string>(s: T) {
+  return s.toUpperCase() as Uppercase<T>;
+}
