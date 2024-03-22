@@ -1,3 +1,4 @@
+export * from './array.js';
 export * from './datetime.js';
 export * from './object.js';
 export * from './random.js';
