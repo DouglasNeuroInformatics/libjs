@@ -1,5 +1,12 @@
 Changelog
 
+## [0.3.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.2.0...v0.3.0) (2024-03-25)
+
+
+### Features
+
+* add HasNestedKey utility type ([2d7d6ee](https://github.com/DouglasNeuroInformatics/libjs/commit/2d7d6eee947dc3e8c384f77d6eb6a123b32b4131))
+
 ## [0.2.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.1.0...v0.2.0) (2024-03-22)
 
 
