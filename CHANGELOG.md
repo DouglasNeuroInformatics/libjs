@@ -1,3 +1,17 @@
+# Changelog
+
+## [0.4.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.3.0...v0.4.0) (2024-07-19)
+
+
+### Features
+
+* add readonlyType option to deepFreeze ([7929ff5](https://github.com/DouglasNeuroInformatics/libjs/commit/7929ff5e1fa8c917d63240d24ed832b2b1167eb5))
+
+
+### Bug Fixes
+
+* test automated deploy workflow ([f97badf](https://github.com/DouglasNeuroInformatics/libjs/commit/f97badf4243f1d6013ccfeb818430cbdf678d012))
+
 Changelog
 
 ## [0.3.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.2.0...v0.3.0) (2024-03-25)
