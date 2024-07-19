@@ -12,7 +12,9 @@ import type { IfNever } from 'type-fest';
  * HasNestedKey<{ a: string; b: { c: { d: number }[] } }, 'd' | 'e'>; // true
  * HasNestedKey<{ a: string; b: { c: { d: number }[] } }, string>; // true
  */
-export type HasNestedKey<T, P extends string> = T extends { [key: string]: unknown }
+export type HasNestedKey<T, P extends string> = T extends {
+  [key: string]: unknown;
+}
   ? IfNever<
       keyof {
         [K in keyof T as K extends P ? K : HasNestedKey<T[K], P> extends true ? K : never]: never;
