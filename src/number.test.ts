@@ -17,6 +17,8 @@ const NUMBER_LIKE_VALUES = [
   '0.0',
   '+0',
   '3.14',
+  '1.',
+  '.1',
   Number.MAX_VALUE,
   Number.MIN_VALUE,
   Infinity,
@@ -27,6 +29,7 @@ const NUMBER_LIKE_VALUES = [
 ];
 
 const NON_NUMBER_LIKE_VALUES = [
+  '1..',
   '--5',
   'A5',
   '5A',
