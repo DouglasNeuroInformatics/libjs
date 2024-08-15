@@ -12,6 +12,7 @@ export default defineConfig({
         lines: 100,
         statements: 100
       }
-    }
+    },
+    watch: false
   }
 });
