@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.4.0...v0.5.0) (2024-08-15)
+
+
+### Features
+
+* add number utils ([88e8f90](https://github.com/DouglasNeuroInformatics/libjs/commit/88e8f9008e52bb84d5882b300b042fcc7260ede8))
+
 ## [0.4.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.3.0...v0.4.0) (2024-07-19)
 
 ### Features
