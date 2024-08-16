@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.5.0...v0.6.0) (2024-08-16)
+
+
+### Features
+
+* add json utils ([dd953dc](https://github.com/DouglasNeuroInformatics/libjs/commit/dd953dc324f8aa88d2b5587f0dbe304b91584290))
+
 ## [0.5.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.4.0...v0.5.0) (2024-08-15)
 
 
