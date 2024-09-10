@@ -1,4 +1,4 @@
-import type { CamelCase, SnakeCase } from 'type-fest';
+import type { CamelCase, Primitive, SnakeCase } from 'type-fest';
 
 export function camelToSnakeCase<T extends string>(s: T) {
   return s.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`) as SnakeCase<T>;
@@ -25,3 +25,12 @@ export function toLowerCase<T extends string>(s: T) {
 export function toUpperCase<T extends string>(s: T) {
   return s.toUpperCase() as Uppercase<T>;
 }
+
+export function format(s: string, ...args: Exclude<Primitive, symbol>[]) {
+  for (const arg of args) {
+    s = s.replace('{}', String(arg));
+  }
+  return s;
+}
+
+console.log(format('Hello {}', 'World'));

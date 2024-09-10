@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
-import { camelToSnakeCase, capitalize, snakeToCamelCase, toLowerCase, toUpperCase, uncapitalize } from './string.js';
+import {
+  camelToSnakeCase,
+  capitalize,
+  format,
+  snakeToCamelCase,
+  toLowerCase,
+  toUpperCase,
+  uncapitalize
+} from './string.js';
 
 describe('camelToSnakeCase', () => {
   it('should convert from camel to snake case ', () => {
@@ -43,5 +51,19 @@ describe('toLowerCase', () => {
 describe('toUpperCase', () => {
   it('should convert to upper case', () => {
     expect(toUpperCase('foo')).toBe('FOO');
+  });
+});
+
+describe('format', () => {
+  it('should return the same string if no positional args are given', () => {
+    expect(format('Hello')).toBe('Hello');
+    expect(format('Hello {}')).toBe('Hello {}');
+  });
+  it('should insert positional arguments', () => {
+    expect(format('Hello {}', 'World')).toBe('Hello World');
+    expect(format('Hello {}. {}.', 'World', 'This function works')).toBe('Hello World. This function works.');
+  });
+  it('should ignore additional indices', () => {
+    expect(format('Hello {}{}.', 'World')).toBe('Hello World{}.');
   });
 });
