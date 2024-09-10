@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.6.0...v0.7.0) (2024-09-10)
+
+
+### Features
+
+* add format function ([143b149](https://github.com/DouglasNeuroInformatics/libjs/commit/143b149732c37f030cda9a9401d0aa4ac7572c86))
+
 ## [0.6.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.5.0...v0.6.0) (2024-08-16)
 
 
