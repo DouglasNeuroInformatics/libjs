@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.7.0...v0.7.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* remove console log statement ([c12fbd2](https://github.com/DouglasNeuroInformatics/libjs/commit/c12fbd29aba4d1b10f237422a7194f42300c7033))
+
 ## [0.7.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.6.0...v0.7.0) (2024-09-10)
 
 
