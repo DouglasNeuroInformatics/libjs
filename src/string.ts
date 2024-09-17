@@ -32,5 +32,3 @@ export function format(s: string, ...args: Exclude<Primitive, symbol>[]) {
   }
   return s;
 }
-
-console.log(format('Hello {}', 'World'));
