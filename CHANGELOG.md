@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.8.0...v1.0.0) (2024-10-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* serialize date
+
+### Features
+
+* serialize date ([48441f7](https://github.com/DouglasNeuroInformatics/libjs/commit/48441f7264b7d1937553da8880d43c2a96df4e71))
+
 ## [0.8.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.7.1...v0.8.0) (2024-10-01)
 
 
