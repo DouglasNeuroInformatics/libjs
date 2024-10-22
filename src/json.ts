@@ -27,18 +27,19 @@ function isSerializedObject<TName extends SerializedObjectName>(
   return Boolean(value.__isSerializedType && value.__deserializedType === name);
 }
 
-export function replacer(_: string, value: unknown) {
+export function replacer(this: unknown, key: string, value: unknown) {
+  console.log({ this: this });
   if (value instanceof Set) {
     return {
       __deserializedType: 'Set',
       __isSerializedType: true,
       value: Array.from(value)
     } satisfies SerializedSet;
-  } else if (value instanceof Date) {
+  } else if (typeof value === 'string' && isPlainObject(this) && this[key] instanceof Date) {
     return {
       __deserializedType: 'Date',
       __isSerializedType: true,
-      value: value.toJSON()
+      value
     } satisfies SerializedDate;
   }
   return value;

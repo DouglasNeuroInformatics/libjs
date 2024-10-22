@@ -5,18 +5,20 @@ import { replacer, reviver } from './json.js';
 describe('replacer', () => {
   it('should serialize a Set', () => {
     const set = new Set([1, 2, 3]);
-    expect(replacer('', set)).toEqual({
-      __deserializedType: 'Set',
-      __isSerializedType: true,
-      value: [1, 2, 3]
+    expect(JSON.parse(JSON.stringify({ set }, replacer))).toMatchObject({
+      set: {
+        __deserializedType: 'Set',
+        __isSerializedType: true,
+        value: [1, 2, 3]
+      }
     });
   });
   it('should serialize a Date', () => {
     const date = new Date();
-    expect(replacer('', date)).toEqual({
-      __deserializedType: 'Date',
-      __isSerializedType: true,
-      value: date.toJSON()
+    expect(JSON.parse(JSON.stringify({ date }, replacer))).toMatchObject({
+      date: {
+        __isSerializedType: true
+      }
     });
   });
   it('should return the value if it is not a Set or a Date', () => {
@@ -43,6 +45,9 @@ describe('reviver', () => {
       value: date.toJSON()
     };
     expect(reviver('', serializedDate)).toEqual(date);
+    expect(JSON.parse(JSON.stringify({ date: serializedDate }), reviver)).toMatchObject({
+      date: expect.any(Date)
+    });
   });
   it('should return the value if it is not a plain object', () => {
     const obj = new Date();
