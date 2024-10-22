@@ -10,12 +10,17 @@ type SerializedDate = SerializedObjectType<'Date', string>;
 
 type SerializedSet = SerializedObjectType<'Set', any[]>;
 
-type SerializedObject = SerializedDate | SerializedSet;
+type SerializedObject<TName extends string = string> = Extract<
+  SerializedDate | SerializedSet,
+  { __deserializedType: TName }
+>;
 
-function isSerializedObject<TName extends SerializedObject['__deserializedType']>(
+type SerializedObjectName = SerializedObject['__deserializedType'];
+
+function isSerializedObject<TName extends SerializedObjectName>(
   value: unknown,
   name: TName
-): value is Extract<SerializedObject, { __deserializedType: TName }> {
+): value is SerializedObject<TName> {
   if (!isPlainObject(value)) {
     return false;
   }
