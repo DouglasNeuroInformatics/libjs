@@ -11,14 +11,22 @@ describe('replacer', () => {
       value: [1, 2, 3]
     });
   });
-  it('should return the value if it is not a Set', () => {
+  it('should serialize a Date', () => {
+    const date = new Date();
+    expect(replacer('', date)).toEqual({
+      __deserializedType: 'Date',
+      __isSerializedType: true,
+      value: date.toJSON()
+    });
+  });
+  it('should return the value if it is not a Set or a Date', () => {
     const obj = { a: 1 };
     expect(replacer('', obj)).toBe(obj);
   });
 });
 
 describe('reviver', () => {
-  it('should deserialize a serialized set', () => {
+  it('should deserialize a serialized Set', () => {
     const serializedSet = {
       __deserializedType: 'Set',
       __isSerializedType: true,
@@ -27,11 +35,20 @@ describe('reviver', () => {
     const deserializedSet = new Set([1, 2, 3]);
     expect(reviver('', serializedSet)).toEqual(deserializedSet);
   });
+  it('should deserialize a serialized Date', () => {
+    const date = new Date();
+    const serializedDate = {
+      __deserializedType: 'Date',
+      __isSerializedType: true,
+      value: date.toJSON()
+    };
+    expect(reviver('', serializedDate)).toEqual(date);
+  });
   it('should return the value if it is not a plain object', () => {
     const obj = new Date();
     expect(reviver('', obj)).toBe(obj);
   });
-  it('should return the value if it is a plain object but not a serialized set', () => {
+  it('should return the value if it is a plain object but not a serialized Set or Date', () => {
     const obj = { a: 1 };
     expect(reviver('', obj)).toBe(obj);
   });

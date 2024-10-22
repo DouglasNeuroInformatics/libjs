@@ -34,6 +34,12 @@ export function replacer(_: string, value: unknown) {
       __isSerializedType: true,
       value: Array.from(value)
     } satisfies SerializedSet;
+  } else if (value instanceof Date) {
+    return {
+      __deserializedType: 'Date',
+      __isSerializedType: true,
+      value: value.toJSON()
+    } satisfies SerializedDate;
   }
   return value;
 }
@@ -41,6 +47,8 @@ export function replacer(_: string, value: unknown) {
 export function reviver(_: string, value: unknown) {
   if (isSerializedObject(value, 'Set')) {
     return new Set(value.value);
+  } else if (isSerializedObject(value, 'Date')) {
+    return new Date(value.value);
   }
   return value;
 }
