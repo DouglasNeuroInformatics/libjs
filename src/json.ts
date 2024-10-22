@@ -1,16 +1,25 @@
 import { isPlainObject } from './object.js';
 
-type SerializedSet = {
-  __deserializedType: 'Set';
-  __isSerializedType: boolean;
-  value: any[];
+type SerializedObjectType<TName extends string, TValue> = {
+  __deserializedType: TName;
+  __isSerializedType: true;
+  value: TValue;
 };
 
-function isSerializedSet(value: unknown): value is SerializedSet {
+type SerializedDate = SerializedObjectType<'Date', string>;
+
+type SerializedSet = SerializedObjectType<'Set', any[]>;
+
+type SerializedObject = SerializedDate | SerializedSet;
+
+function isSerializedObject<TName extends SerializedObject['__deserializedType']>(
+  value: unknown,
+  name: TName
+): value is Extract<SerializedObject, { __deserializedType: TName }> {
   if (!isPlainObject(value)) {
     return false;
   }
-  return Boolean(value.__isSerializedType && value.__deserializedType === 'Set');
+  return Boolean(value.__isSerializedType && value.__deserializedType === name);
 }
 
 export function replacer(_: string, value: unknown) {
@@ -25,7 +34,7 @@ export function replacer(_: string, value: unknown) {
 }
 
 export function reviver(_: string, value: unknown) {
-  if (isSerializedSet(value)) {
+  if (isSerializedObject(value, 'Set')) {
     return new Set(value.value);
   }
   return value;
