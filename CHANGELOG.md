@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.7.1...v0.8.0) (2024-10-01)
+
+
+### Features
+
+* add parseDuration and TIME_MAP ([020bc35](https://github.com/DouglasNeuroInformatics/libjs/commit/020bc352a3293cd26d0a1eed3693f44c72b5b47a))
+
 ## [0.7.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v0.7.0...v0.7.1) (2024-09-17)
 
 
