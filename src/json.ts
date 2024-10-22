@@ -28,7 +28,6 @@ function isSerializedObject<TName extends SerializedObjectName>(
 }
 
 export function replacer(this: unknown, key: string, value: unknown) {
-  console.log({ this: this });
   if (value instanceof Set) {
     return {
       __deserializedType: 'Set',
