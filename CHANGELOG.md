@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.0.2...v1.1.0) (2024-12-23)
+
+
+### Features
+
+* add isAllUndefined ([6934017](https://github.com/DouglasNeuroInformatics/libjs/commit/6934017cf3dcda4c03ee1305c8c01e93ea01909b))
+
 ## [1.0.2](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.0.1...v1.0.2) (2024-10-22)
 
 
