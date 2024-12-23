@@ -47,3 +47,7 @@ export function isPlainObject(value: unknown): value is { [key: string]: unknown
     !(Symbol.iterator in value)
   );
 }
+
+export function isAllUndefined<T extends { [key: string]: unknown }>(obj: T) {
+  return Object.values(obj).every((value) => value === undefined);
+}

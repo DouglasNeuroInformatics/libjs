@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { deepFreeze, isObject, isObjectLike, isPlainObject } from './object.js';
+import { deepFreeze, isAllUndefined, isObject, isObjectLike, isPlainObject } from './object.js';
 
 describe('deepFreeze', () => {
   it('should not allow mutating a primitive value', () => {
@@ -74,5 +74,17 @@ describe('isPlainObject', () => {
   });
   it('should return false for null', () => {
     expect(isPlainObject(() => null)).toBe(false);
+  });
+});
+
+describe('isAllUndefined', () => {
+  it('should return true for an empty object', () => {
+    expect(isAllUndefined({})).toBe(true);
+  });
+  it('should return true for an object with an undefined property', () => {
+    expect(isAllUndefined({ foo: undefined })).toBe(true);
+  });
+  it('should return true for an object with a defined property', () => {
+    expect(isAllUndefined({ bar: null, foo: undefined })).toBe(false);
   });
 });
