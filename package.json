@@ -37,17 +37,17 @@
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
-    "@douglasneuroinformatics/eslint-config": "^4.2.1",
+    "@douglasneuroinformatics/eslint-config": "^5.2.4",
     "@douglasneuroinformatics/prettier-config": "^0.0.1",
     "@douglasneuroinformatics/semantic-release": "^0.0.1",
     "@douglasneuroinformatics/tsconfig": "^1.0.2",
-    "@vitest/coverage-v8": "^1.4.0",
-    "eslint": "^8.57.0",
+    "@vitest/coverage-v8": "^2.1.8",
+    "eslint": "^9.17.0",
     "husky": "^9.1.7",
     "prettier": "^3.4.2",
     "typedoc": "^0.27.5",
     "typescript": "5.5.x",
-    "vitest": "^1.4.0"
+    "vitest": "^2.1.8"
   },
   "commitlint": {
     "extends": [
