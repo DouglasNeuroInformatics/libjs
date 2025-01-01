@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.1.0...v1.2.0) (2025-01-01)
+
+
+### Features
+
+* add toLocalISOString ([36366cd](https://github.com/DouglasNeuroInformatics/libjs/commit/36366cd8b46a8ab28cf8a73d88d6fed28f967d59))
+
 ## [1.1.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.0.2...v1.1.0) (2024-12-23)
 
 
