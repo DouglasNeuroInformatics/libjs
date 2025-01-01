@@ -16,6 +16,19 @@ export const TIME_MAP = new Map([
 ] as const);
 
 /**
+ * Converts a given Date object to an ISO 8601 string that represents the local time.
+ *
+ * The function adjusts the input date by accounting for the local timezone offset so
+ * the resulting ISO string reflects the local time rather than UTC.
+ *
+ * @param date - The Date object to be converted.
+ * @returns An ISO 8601 formatted string representing the local time.
+ */
+export function toLocalISOString(date: Date) {
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, -1);
+}
+
+/**
  * Returns the data in basic ISO format, e.g., yyyy-mm-dd
  * @example
  * ```ts

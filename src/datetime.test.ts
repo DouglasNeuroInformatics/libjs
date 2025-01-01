@@ -1,6 +1,32 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
 
-import { parseDuration, sleep, toBasicISOString, yearsPassed } from './datetime.js';
+import { parseDuration, sleep, toBasicISOString, toLocalISOString, yearsPassed } from './datetime.js';
+
+describe('toLocalISOString', () => {
+  let getTimezoneOffset: MockInstance<() => number>;
+  beforeEach(() => {
+    getTimezoneOffset = vi.spyOn(Date.prototype, 'getTimezoneOffset');
+  });
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+  it('should return the correct string when the current timezone is is UTC+00:00', () => {
+    getTimezoneOffset.mockReturnValueOnce(0);
+    expect(toLocalISOString(new Date('2025-01-01T00:00:00.000Z'))).toBe('2025-01-01T00:00:00.000');
+  });
+  it('should return the correct string when the current timezone is UTC-05:00', () => {
+    getTimezoneOffset.mockReturnValueOnce(300);
+    expect(toLocalISOString(new Date('2025-01-01T05:00:00.000Z'))).toBe('2025-01-01T00:00:00.000');
+  });
+  it('should return the correct string when the current timezone is UTC-08:00', () => {
+    getTimezoneOffset.mockReturnValueOnce(480);
+    expect(toLocalISOString(new Date('2025-01-01T05:00:00.000Z'))).toBe('2024-12-31T21:00:00.000');
+  });
+  it('should return the correct string when the current timezone is UTC+03:00', () => {
+    getTimezoneOffset.mockReturnValueOnce(-180);
+    expect(toLocalISOString(new Date('2025-01-01T05:00:00.000Z'))).toBe('2025-01-01T08:00:00.000');
+  });
+});
 
 describe('toBasicISOString', () => {
   it('should return a string of the format yyyy-mm-dd', () => {
