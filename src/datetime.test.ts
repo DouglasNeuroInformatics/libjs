@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
-import { parseDuration, sleep, toBasicISOString, yearsPassed } from './datetime.js';
+import { parseDuration, sleep, toBasicISOString, toLocalISOString, yearsPassed } from './datetime.js';
+
+describe('toLocalISOString', () => {
+  it('should convert a UTC date back to a local ISO string', () => {
+    const expected = '2025-01-01T00:00:00.000';
+    const actual = toLocalISOString(new Date(expected));
+    expect(actual).toBe(expected);
+  });
+});
 
 describe('toBasicISOString', () => {
   it('should return a string of the format yyyy-mm-dd', () => {
