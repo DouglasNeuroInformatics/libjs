@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.2.0...v1.2.1) (2025-01-29)
+
+
+### Bug Fixes
+
+* remove typescript as peer dependency ([1a66dbe](https://github.com/DouglasNeuroInformatics/libjs/commit/1a66dbe87b4f9ff8eca914ea841b7dce1cb50766))
+
 ## [1.2.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.1.0...v1.2.0) (2025-01-01)
 
 

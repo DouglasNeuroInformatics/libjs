@@ -1,7 +1,7 @@
 {
   "name": "@douglasneuroinformatics/libjs",
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "packageManager": "pnpm@9.15.1",
   "description": "A collection of utility functions and types for Node.js and the browser",
   "author": "Joshua Unrau",
