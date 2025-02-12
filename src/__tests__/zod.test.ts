@@ -3,7 +3,7 @@ import * as module from 'node:module';
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
-import { $BooleanLike, isZodType } from '../zod.js';
+import { $$BooleanLike, $$NumberLike, isZodType } from '../zod.js';
 
 const require = module.createRequire(import.meta.url);
 
@@ -35,24 +35,38 @@ describe('isZodType', () => {
 
 describe('$BooleanLike', () => {
   it('should parse "true" correctly', () => {
-    expect($BooleanLike.safeParse('true').data).toBe(true);
+    expect($$BooleanLike().safeParse('true').data).toBe(true);
   });
   it('should parse "false" correctly', () => {
-    expect($BooleanLike.safeParse('false').data).toBe(false);
+    expect($$BooleanLike().safeParse('false').data).toBe(false);
   });
   it('should parse booleans correctly', () => {
-    expect($BooleanLike.safeParse(true).data).toBe(true);
-    expect($BooleanLike.safeParse(false).data).toBe(false);
+    expect($$BooleanLike().safeParse(true).data).toBe(true);
+    expect($$BooleanLike().safeParse(false).data).toBe(false);
   });
   it('should fail to parse undefined', () => {
-    expect($BooleanLike.safeParse(undefined).success).toBe(false);
+    expect($$BooleanLike().safeParse(undefined).success).toBe(false);
   });
   it('should fail to parse an empty string', () => {
-    expect($BooleanLike.safeParse('').success).toBe(false);
+    expect($$BooleanLike().safeParse('').success).toBe(false);
   });
   it('should parse undefined, if set to optional', () => {
-    const result = $BooleanLike.optional().safeParse(undefined);
+    const result = $$BooleanLike().optional().safeParse(undefined);
     expect(result.success).toBe(true);
     expect(result.data).toBe(undefined);
+  });
+});
+
+describe('$NumberLike', () => {
+  it('should parse a number', () => {
+    expect($$NumberLike().safeParse(1).data).toBe(1);
+  });
+  it('should fail to parse non-numbers', () => {
+    expect($$NumberLike().safeParse(NaN).success).toBe(false);
+    expect($$NumberLike().safeParse('').success).toBe(false);
+  });
+  it('should allow restricting the number', () => {
+    expect($$NumberLike({ int: true }).safeParse('1.1').success).toBe(false);
+    expect($$NumberLike({ int: true }).safeParse('1').data).toBe(1);
   });
 });
