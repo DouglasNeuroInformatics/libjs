@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
 
-import { parseDuration, sleep, toBasicISOString, toLocalISOString, yearsPassed } from './datetime.js';
+import { parseDuration, sleep, toBasicISOString, toLocalISOString, yearsPassed } from '../datetime.js';
 
 describe('toLocalISOString', () => {
   let getTimezoneOffset: MockInstance<() => number>;

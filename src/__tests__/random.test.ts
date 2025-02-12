@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { randomDate, randomInt, randomValue } from './random.js';
+import { randomDate, randomInt, randomValue } from '../random.js';
 
 describe('randomInt', () => {
   it('should return an integer value within the range', () => {
