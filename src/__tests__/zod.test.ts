@@ -66,7 +66,7 @@ describe('$NumberLike', () => {
     expect($$NumberLike().safeParse('').success).toBe(false);
   });
   it('should allow restricting the number', () => {
-    expect($$NumberLike({ int: true }).safeParse('1.1').success).toBe(false);
-    expect($$NumberLike({ int: true }).safeParse('1').data).toBe(1);
+    expect($$NumberLike((base) => base.int()).safeParse('1.1').success).toBe(false);
+    expect($$NumberLike((base) => base.int()).safeParse('1').data).toBe(1);
   });
 });
