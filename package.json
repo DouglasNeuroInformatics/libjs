@@ -20,7 +20,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc -b tsconfig.build.json",
     "build:docs": "typedoc",
     "format": "prettier --write src",
     "lint": "tsc --noEmit && eslint --fix src",
@@ -38,6 +38,7 @@
     "@douglasneuroinformatics/prettier-config": "^0.0.1",
     "@douglasneuroinformatics/semantic-release": "^0.0.1",
     "@douglasneuroinformatics/tsconfig": "^1.0.2",
+    "@types/node": "22.x",
     "@vitest/coverage-v8": "^3.0.5",
     "eslint": "^9.20.1",
     "husky": "^9.1.7",
