@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { deepFreeze, isAllUndefined, isObject, isObjectLike, isPlainObject } from '../object.js';
+import { deepFreeze, filterObject, isAllUndefined, isObject, isObjectLike, isPlainObject } from '../object.js';
 
 describe('deepFreeze', () => {
   it('should not allow mutating a primitive value', () => {
@@ -86,5 +86,13 @@ describe('isAllUndefined', () => {
   });
   it('should return true for an object with a defined property', () => {
     expect(isAllUndefined({ bar: null, foo: undefined })).toBe(false);
+  });
+});
+
+describe('filterValues', () => {
+  it('should filter an object based on a condition', () => {
+    expect(filterObject({ a: 1, b: 'hello' }, (value) => typeof value === 'number')).toStrictEqual({
+      a: 1
+    });
   });
 });

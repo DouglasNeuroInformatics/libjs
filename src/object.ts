@@ -51,3 +51,10 @@ export function isPlainObject(value: unknown): value is { [key: string]: unknown
 export function isAllUndefined<T extends { [key: string]: unknown }>(obj: T) {
   return Object.values(obj).every((value) => value === undefined);
 }
+
+export function filterObject<T extends { [key: string]: unknown }>(
+  obj: T,
+  callback: (value: T[keyof T], key: keyof T) => boolean
+) {
+  return Object.fromEntries(Object.entries(obj).filter(([key, value]) => callback(value as T[keyof T], key)));
+}
