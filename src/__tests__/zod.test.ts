@@ -3,7 +3,7 @@ import * as module from 'node:module';
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
-import { isZodType } from '../zod.js';
+import { $BooleanLike, isZodType } from '../zod.js';
 
 const require = module.createRequire(import.meta.url);
 
@@ -30,5 +30,39 @@ describe('isZodType', () => {
     const input = zCJS.object({});
     expect(input).not.toBeInstanceOf(z.ZodType);
     expect(isZodType(input)).toBe(true);
+  });
+});
+
+describe('$BooleanLike', () => {
+  it('should parse "true" correctly', () => {
+    expect($BooleanLike().safeParse('true').data).toBe(true);
+  });
+  it('should parse "false" correctly', () => {
+    expect($BooleanLike().safeParse('false').data).toBe(false);
+  });
+  it('should parse booleans correctly', () => {
+    expect($BooleanLike().safeParse(true).data).toBe(true);
+    expect($BooleanLike().safeParse(false).data).toBe(false);
+  });
+  it('should fail to parse undefined', () => {
+    expect($BooleanLike().safeParse(undefined).success).toBe(false);
+  });
+  it('should fail to parse an empty string', () => {
+    expect($BooleanLike().safeParse('').success).toBe(false);
+  });
+  it('should parse undefined, if set to optional', () => {
+    const result = $BooleanLike({ optional: true }).safeParse(undefined);
+    expect(result.success).toBe(true);
+    expect(result.data).toBe(undefined);
+  });
+  it('should parse an empty string, if set to optional', () => {
+    const result = $BooleanLike({ optional: true }).safeParse('');
+    expect(result.success).toBe(true);
+    expect(result.data).toBe(undefined);
+  });
+  it('should throw if a user attempts to call the optional method', () => {
+    expect(() => $BooleanLike().optional()).toThrow(
+      'Cannot set optional with method: instead, use $BooleanLike({ optional: true })'
+    );
   });
 });
