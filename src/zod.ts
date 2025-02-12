@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { isNumberLike, parseNumber } from './number.js';
 import { isObject } from './object.js';
 
+type SchemaFactory<TSchema extends z.ZodTypeAny, TInput = any> = () => z.ZodEffects<TSchema, z.TypeOf<TSchema>, TInput>;
+
 /** Used to determine if object is of type `ZodType` independent of specific instances or library versions */
 export function isZodType(arg: unknown): arg is z.ZodTypeAny {
   let prototype: null | object = null;
@@ -12,7 +14,7 @@ export function isZodType(arg: unknown): arg is z.ZodTypeAny {
   return Boolean(prototype && Reflect.get(prototype, 'name') === 'ZodType');
 }
 
-export const $$BooleanLike = (): z.ZodEffects<z.ZodBoolean, boolean, any> => {
+export const $$BooleanLike: SchemaFactory<z.ZodBoolean> = () => {
   return z.preprocess((arg) => {
     if (typeof arg === 'string') {
       if (arg.trim().toLowerCase() === 'true') {
@@ -25,7 +27,7 @@ export const $$BooleanLike = (): z.ZodEffects<z.ZodBoolean, boolean, any> => {
   }, z.boolean());
 };
 
-export const $$NumberLike = (): z.ZodEffects<z.ZodNumber, number, any> => {
+export const $$NumberLike: SchemaFactory<z.ZodNumber> = () => {
   return z.preprocess((arg) => {
     if (isNumberLike(arg)) {
       return parseNumber(arg);
