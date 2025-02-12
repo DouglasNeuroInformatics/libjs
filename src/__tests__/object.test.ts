@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { deepFreeze, isAllUndefined, isObject, isObjectLike, isPlainObject } from './object.js';
+import { deepFreeze, isAllUndefined, isObject, isObjectLike, isPlainObject } from '../object.js';
 
 describe('deepFreeze', () => {
   it('should not allow mutating a primitive value', () => {

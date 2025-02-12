@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { hasDuplicates, isUnique } from './array.js';
+import { hasDuplicates, isUnique } from '../array.js';
 
 describe('isUnique', () => {
   it('should return true for a unique array', () => {

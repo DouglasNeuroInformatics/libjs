@@ -8,7 +8,7 @@ import {
   toLowerCase,
   toUpperCase,
   uncapitalize
-} from './string.js';
+} from '../string.js';
 
 describe('camelToSnakeCase', () => {
   it('should convert from camel to snake case ', () => {

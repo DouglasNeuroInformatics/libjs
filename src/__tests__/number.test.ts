@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { isNumberLike, parseNumber } from './number.js';
+import { isNumberLike, parseNumber } from '../number.js';
 
 const NUMBER_LIKE_VALUES = [
   5e3,

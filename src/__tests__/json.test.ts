@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { replacer, reviver } from './json.js';
+import { replacer, reviver } from '../json.js';
 
 describe('replacer', () => {
   it('should serialize a Set', () => {
