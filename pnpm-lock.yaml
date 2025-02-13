@@ -14,12 +14,6 @@ importers:
         specifier: ^3.22.6
         version: 3.24.2
     devDependencies:
-      '@commitlint/cli':
-        specifier: ^19.7.1
-        version: 19.7.1(@types/node@22.13.2)(typescript@5.6.3)
-      '@commitlint/config-conventional':
-        specifier: ^19.7.1
-        version: 19.7.1
       '@douglasneuroinformatics/eslint-config':
         specifier: ^5.2.4
         version: 5.2.4(astro-eslint-parser@1.2.1)(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3)
@@ -27,8 +21,8 @@ importers:
         specifier: ^0.0.1
         version: 0.0.1(husky@9.1.7)(prettier@3.5.1)
       '@douglasneuroinformatics/semantic-release':
-        specifier: ^0.1.0
-        version: 0.1.0(@commitlint/cli@19.7.1(@types/node@22.13.2)(typescript@5.6.3))(@commitlint/config-conventional@19.7.1)(husky@9.1.7)(typescript@5.6.3)
+        specifier: ^0.2.0
+        version: 0.2.0(@types/node@22.13.2)(husky@9.1.7)(typescript@5.6.3)
       '@douglasneuroinformatics/tsconfig':
         specifier: ^1.0.2
         version: 1.0.2(typescript@5.6.3)
@@ -219,19 +213,13 @@ packages:
       prettier-plugin-tailwindcss:
         optional: true
 
-  '@douglasneuroinformatics/semantic-release@0.1.0':
+  '@douglasneuroinformatics/semantic-release@0.2.0':
     resolution:
-      { integrity: sha512-FVlVg3UAqbOVD1VzMxaDhYVB0yjzE8hOsVdSQ3Lvmjx7/DpPpPtNdwTVHw4B7evv6nsAbomWN+MHTkYyWNx0tw== }
+      { integrity: sha512-4Z504l2INC2bxN/aNR+gWaN7Lh6229+rVOUXJxNqFHZDYw8c3M6p0qYK89D9IdeabtY0WBF6QLmpJywDrsPFEw== }
     hasBin: true
     peerDependencies:
-      '@commitlint/cli': 19.x
-      '@commitlint/config-conventional': 19.x
       husky: 9.x
     peerDependenciesMeta:
-      '@commitlint/cli':
-        optional: true
-      '@commitlint/config-conventional':
-        optional: true
       husky:
         optional: true
 
@@ -4059,8 +4047,10 @@ snapshots:
     optionalDependencies:
       husky: 9.1.7
 
-  '@douglasneuroinformatics/semantic-release@0.1.0(@commitlint/cli@19.7.1(@types/node@22.13.2)(typescript@5.6.3))(@commitlint/config-conventional@19.7.1)(husky@9.1.7)(typescript@5.6.3)':
+  '@douglasneuroinformatics/semantic-release@0.2.0(@types/node@22.13.2)(husky@9.1.7)(typescript@5.6.3)':
     dependencies:
+      '@commitlint/cli': 19.7.1(@types/node@22.13.2)(typescript@5.6.3)
+      '@commitlint/config-conventional': 19.7.1
       '@semantic-release/changelog': 6.0.3(semantic-release@24.2.2(typescript@5.6.3))
       '@semantic-release/commit-analyzer': 13.0.1(semantic-release@24.2.2(typescript@5.6.3))
       '@semantic-release/git': 10.0.1(semantic-release@24.2.2(typescript@5.6.3))
@@ -4070,10 +4060,9 @@ snapshots:
       conventional-changelog-conventionalcommits: 8.0.0
       semantic-release: 24.2.2(typescript@5.6.3)
     optionalDependencies:
-      '@commitlint/cli': 19.7.1(@types/node@22.13.2)(typescript@5.6.3)
-      '@commitlint/config-conventional': 19.7.1
       husky: 9.1.7
     transitivePeerDependencies:
+      - '@types/node'
       - supports-color
       - typescript
 

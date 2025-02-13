@@ -33,11 +33,9 @@
     "zod": "^3.22.6"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.7.1",
-    "@commitlint/config-conventional": "^19.7.1",
     "@douglasneuroinformatics/eslint-config": "^5.2.4",
     "@douglasneuroinformatics/prettier-config": "^0.0.1",
-    "@douglasneuroinformatics/semantic-release": "^0.1.0",
+    "@douglasneuroinformatics/semantic-release": "^0.2.0",
     "@douglasneuroinformatics/tsconfig": "^1.0.2",
     "@types/node": "22.x",
     "@vitest/coverage-v8": "^3.0.5",
@@ -50,7 +48,7 @@
   },
   "commitlint": {
     "extends": [
-      "@commitlint/config-conventional"
+      "@douglasneuroinformatics/semantic-release/commitlint-config"
     ]
   },
   "prettier": "@douglasneuroinformatics/prettier-config",
