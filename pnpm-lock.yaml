@@ -21,8 +21,8 @@ importers:
         specifier: ^0.0.1
         version: 0.0.1(husky@9.1.7)(prettier@3.5.1)
       '@douglasneuroinformatics/semantic-release':
-        specifier: ^0.2.0
-        version: 0.2.0(@types/node@22.13.2)(husky@9.1.7)(typescript@5.6.3)
+        specifier: ^0.2.1
+        version: 0.2.1(@types/node@22.13.2)(husky@9.1.7)(typescript@5.6.3)
       '@douglasneuroinformatics/tsconfig':
         specifier: ^1.0.2
         version: 1.0.2(typescript@5.6.3)
@@ -213,9 +213,9 @@ packages:
       prettier-plugin-tailwindcss:
         optional: true
 
-  '@douglasneuroinformatics/semantic-release@0.2.0':
+  '@douglasneuroinformatics/semantic-release@0.2.1':
     resolution:
-      { integrity: sha512-4Z504l2INC2bxN/aNR+gWaN7Lh6229+rVOUXJxNqFHZDYw8c3M6p0qYK89D9IdeabtY0WBF6QLmpJywDrsPFEw== }
+      { integrity: sha512-KoNEeAjtQ6PqZ8QZvE8Egr5iVBHrCy7fpIQjuW93XSNoUOeEqdo82ws/3xGO1w8+9Ne/Xc8ypB3tqKBFduWXTA== }
     hasBin: true
     peerDependencies:
       husky: 9.x
@@ -4047,7 +4047,7 @@ snapshots:
     optionalDependencies:
       husky: 9.1.7
 
-  '@douglasneuroinformatics/semantic-release@0.2.0(@types/node@22.13.2)(husky@9.1.7)(typescript@5.6.3)':
+  '@douglasneuroinformatics/semantic-release@0.2.1(@types/node@22.13.2)(husky@9.1.7)(typescript@5.6.3)':
     dependencies:
       '@commitlint/cli': 19.7.1(@types/node@22.13.2)(typescript@5.6.3)
       '@commitlint/config-conventional': 19.7.1
