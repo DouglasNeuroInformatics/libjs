@@ -58,5 +58,10 @@
     "extends": [
       "@douglasneuroinformatics/semantic-release"
     ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
