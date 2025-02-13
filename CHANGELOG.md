@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.2.1...v1.3.0) (2025-02-13)
+
+### Features
+
+* add $BooleanLike ([de29ac7](https://github.com/DouglasNeuroInformatics/libjs/commit/de29ac7e9d9a150dc39f8d6ddf643c6dc3cc9cab))
+* add filterObject ([2984eb8](https://github.com/DouglasNeuroInformatics/libjs/commit/2984eb8641506c33bd8c20397f0e99e9b147e057))
+* add zod module ([e64decf](https://github.com/DouglasNeuroInformatics/libjs/commit/e64decf1ff6ba9e3e3398f95bb8e068b44af7608))
+
 ## [1.2.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.2.0...v1.2.1) (2025-01-29)
 
 
