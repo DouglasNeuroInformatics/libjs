@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.3.2...v1.4.0) (2025-02-14)
+
+### Features
+
+* add $Uint8ArrayLike ([4619f05](https://github.com/DouglasNeuroInformatics/libjs/commit/4619f052e1e685a4397a710824b899f0ac7b64df))
+* add $UrlLike ([b1cf915](https://github.com/DouglasNeuroInformatics/libjs/commit/b1cf915867d2889b4f2d52000f4f5c4cac7e3969))
+
 ## [1.3.2](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.3.1...v1.3.2) (2025-02-14)
 
 ### Bug Fixes
