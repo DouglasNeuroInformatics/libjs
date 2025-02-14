@@ -42,3 +42,12 @@ export const $UrlLike: z.ZodType<URL, z.ZodTypeDef, any> = z.preprocess(
     .url()
     .transform((arg) => new URL(arg))
 );
+
+export const $Uint8ArrayLike: z.ZodType<Uint8Array, z.ZodTypeDef, any> = z
+  .union([z.array(z.number().int().min(0).max(255)), z.instanceof(Uint8Array), z.instanceof(ArrayBuffer)])
+  .transform((arg) => {
+    if (!(arg instanceof Uint8Array)) {
+      return new Uint8Array(arg);
+    }
+    return arg;
+  });

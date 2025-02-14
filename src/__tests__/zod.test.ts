@@ -3,7 +3,7 @@ import * as module from 'node:module';
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
-import { $BooleanLike, $NumberLike, $UrlLike, isZodType } from '../zod.js';
+import { $BooleanLike, $NumberLike, $Uint8ArrayLike, $UrlLike, isZodType } from '../zod.js';
 
 const require = module.createRequire(import.meta.url);
 
@@ -82,5 +82,37 @@ describe('$UrlLike', () => {
     const result = $UrlLike.safeParse('https://opendatacapture.org');
     expect(result.success).toBe(true);
     expect(result.data).toBeInstanceOf(URL);
+  });
+});
+
+describe('$Uint8ArrayLike', () => {
+  it('should pass when given a Uint8Array', () => {
+    const input = new Uint8Array([1, 2, 3]);
+    const result = $Uint8ArrayLike.parse(input);
+    expect(result).toBeInstanceOf(Uint8Array);
+    expect([...result]).toEqual([1, 2, 3]);
+  });
+
+  it('should convert an array to Uint8Array', () => {
+    const input = [4, 5, 6];
+    const result = $Uint8ArrayLike.parse(input);
+    expect(result).toBeInstanceOf(Uint8Array);
+    expect([...result]).toEqual([4, 5, 6]);
+  });
+
+  it('should fail to convert an invalid array', () => {
+    expect($Uint8ArrayLike.safeParse([-1, 2, 3]).success).toBe(false);
+    expect($Uint8ArrayLike.safeParse([1, 2, 256]).success).toBe(false);
+    expect($Uint8ArrayLike.safeParse([1, 2, NaN]).success).toBe(false);
+  });
+
+  it('should convert an ArrayBuffer to Uint8Array', () => {
+    const buffer = new ArrayBuffer(3);
+    const view = new Uint8Array(buffer);
+    view.set([7, 8, 9]);
+    const result = $Uint8ArrayLike.safeParse(buffer);
+    expect(result.success).toBe(true);
+    expect(result.data).toBeInstanceOf(Uint8Array);
+    expect([...result.data!]).toEqual([7, 8, 9]);
   });
 });
