@@ -12,7 +12,7 @@ export function isZodType(arg: unknown): arg is z.ZodTypeAny {
   return Boolean(prototype && Reflect.get(prototype, 'name') === 'ZodType');
 }
 
-export const $BooleanLike = z.preprocess((arg) => {
+export const $BooleanLike: z.ZodType<boolean, z.ZodTypeDef, any> = z.preprocess((arg) => {
   if (typeof arg === 'string') {
     if (arg.trim().toLowerCase() === 'true') {
       return true;
@@ -23,7 +23,7 @@ export const $BooleanLike = z.preprocess((arg) => {
   return arg;
 }, z.boolean());
 
-export const $NumberLike = z.preprocess((arg) => {
+export const $NumberLike: z.ZodType<number, z.ZodTypeDef, any> = z.preprocess((arg) => {
   if (isNumberLike(arg)) {
     return parseNumber(arg);
   }
