@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.2](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.3.1...v1.3.2) (2025-02-14)
+
+### Bug Fixes
+
+* add explicit types to schemas ([20ec8a2](https://github.com/DouglasNeuroInformatics/libjs/commit/20ec8a214d282e9231d116e70caabf08cedfd729))
+
 ## [1.3.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.3.0...v1.3.1) (2025-02-14)
 
 ### Bug Fixes
