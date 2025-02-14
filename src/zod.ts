@@ -29,3 +29,16 @@ export const $NumberLike: z.ZodType<number, z.ZodTypeDef, any> = z.preprocess((a
   }
   return arg;
 }, z.number());
+
+export const $UrlLike: z.ZodType<URL, z.ZodTypeDef, any> = z.preprocess(
+  (arg) => {
+    if (arg instanceof URL) {
+      return arg.href;
+    }
+    return arg;
+  },
+  z
+    .string()
+    .url()
+    .transform((arg) => new URL(arg))
+);

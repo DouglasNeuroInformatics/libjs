@@ -3,7 +3,7 @@ import * as module from 'node:module';
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
-import { $BooleanLike, $NumberLike, isZodType } from '../zod.js';
+import { $BooleanLike, $NumberLike, $UrlLike, isZodType } from '../zod.js';
 
 const require = module.createRequire(import.meta.url);
 
@@ -69,5 +69,18 @@ describe('$NumberLike', () => {
     const $IntLike = $NumberLike.pipe(z.number().int());
     expect($IntLike.safeParse('1.1').success).toBe(false);
     expect($IntLike.safeParse('1').data).toBe(1);
+  });
+});
+
+describe('$UrlLike', () => {
+  it('should parse a url', () => {
+    const result = $UrlLike.safeParse(new URL('https://opendatacapture.org'));
+    expect(result.success).toBe(true);
+    expect(result.data).toBeInstanceOf(URL);
+  });
+  it('should parse a url string', () => {
+    const result = $UrlLike.safeParse('https://opendatacapture.org');
+    expect(result.success).toBe(true);
+    expect(result.data).toBeInstanceOf(URL);
   });
 });
