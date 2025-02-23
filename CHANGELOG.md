@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.4.0...v1.5.0) (2025-02-23)
+
+### Features
+
+* add exception ([dba2721](https://github.com/DouglasNeuroInformatics/libjs/commit/dba27210bde1a234b5355930e6ff8ba209a53d38))
+
 ## [1.4.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.3.2...v1.4.0) (2025-02-14)
 
 ### Features
