@@ -15,7 +15,7 @@ type ExceptionParams = {
   name: string;
 };
 
-export type ExceptionInstance<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = Error & {
+type ExceptionInstance<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = Error & {
   cause: TOptions['cause'];
   details: TOptions['details'];
   name: TParams['name'];
@@ -28,11 +28,11 @@ type ExceptionConstructorArgs<TParams extends ExceptionParams, TOptions extends 
       ? [TOptions]
       : [message: string, options: TOptions];
 
-export type ExceptionConstructor<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = new (
+type ExceptionConstructor<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = new (
   ...args: ExceptionConstructorArgs<TParams, TOptions>
 ) => ExceptionInstance<TParams, TOptions>;
 
-export abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions>
+abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions>
   extends Error
   implements ExceptionInstance<TParams, TOptions>
 {
@@ -47,7 +47,7 @@ export abstract class BaseException<TParams extends ExceptionParams, TOptions ex
   }
 }
 
-export class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions extends ExceptionOptions> {
+class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions extends ExceptionOptions> {
   params?: TParams;
 
   build(): [TParams] extends [ExceptionParams] ? ExceptionConstructor<TParams, TOptions> : never;
@@ -74,3 +74,6 @@ export class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOpti
     return this as unknown as ExceptionBuilder<TUpdatedParams, TOptions>;
   }
 }
+
+export type { ExceptionConstructor, ExceptionInstance };
+export { BaseException, ExceptionBuilder };

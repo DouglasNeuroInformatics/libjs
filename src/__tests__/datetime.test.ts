@@ -1,4 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { MockInstance } from 'vitest';
 
 import { parseDuration, sleep, toBasicISOString, toLocalISOString, yearsPassed } from '../datetime.js';
 

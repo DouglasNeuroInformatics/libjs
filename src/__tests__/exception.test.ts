@@ -1,7 +1,9 @@
 import type { Simplify } from 'type-fest';
 import { describe, expect, expectTypeOf, it, test } from 'vitest';
 
-import { BaseException, ExceptionBuilder, type ExceptionConstructor, type ExceptionInstance } from '../exception.js';
+import { BaseException, ExceptionBuilder } from '../exception.js';
+
+import type { ExceptionConstructor, ExceptionInstance } from '../exception.js';
 
 type ExceptionOptionsWithCode = Simplify<ErrorOptions & { details: { code: number } }>;
 type ExceptionOptionsWithCause = Simplify<ErrorOptions & { cause: Error }>;
