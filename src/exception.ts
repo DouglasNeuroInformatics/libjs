@@ -75,5 +75,7 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
   }
 }
 
+const ValueError = new ExceptionBuilder().setParams({ name: 'ValueError' }).build();
+
 export type { ExceptionConstructor, ExceptionInstance };
-export { BaseException, ExceptionBuilder };
+export { BaseException, ExceptionBuilder, ValueError };
