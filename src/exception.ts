@@ -45,7 +45,16 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
     this.cause = options?.cause;
     this.details = options?.details;
   }
+
+  // static extend() {
+  //   return class extends this {};
+  // }
 }
+
+abstract class ValueError<TParams extends ExceptionParams, TOptions extends ExceptionOptions> extends BaseException<
+  TParams,
+  TOptions
+> {}
 
 class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions extends ExceptionOptions> {
   private params?: TParams;
@@ -74,8 +83,6 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
     return this as unknown as ExceptionBuilder<TUpdatedParams, TOptions>;
   }
 }
-
-const ValueError = new ExceptionBuilder().setParams({ name: 'ValueError' }).build();
 
 export type { ExceptionConstructor, ExceptionInstance };
 export { BaseException, ExceptionBuilder, ValueError };

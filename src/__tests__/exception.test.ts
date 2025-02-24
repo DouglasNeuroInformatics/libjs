@@ -1,7 +1,7 @@
 import type { Simplify } from 'type-fest';
 import { describe, expect, expectTypeOf, it, test } from 'vitest';
 
-import { BaseException, ExceptionBuilder } from '../exception.js';
+import { BaseException, ExceptionBuilder, ValueError } from '../exception.js';
 
 import type { ExceptionConstructor, ExceptionInstance } from '../exception.js';
 
@@ -115,5 +115,11 @@ describe('ExceptionBuilder', () => {
     const error = new TestException({ cause: new Error('Test') });
     expect(error.message).toBe('Custom message');
     expectTypeOf<ConstructorParameters<typeof TestException>>().toEqualTypeOf<[options: { cause: Error }]>();
+  });
+});
+
+describe('ValueError', () => {
+  it('should have the correct prototype', () => {
+    expect(Object.getPrototypeOf(ValueError)).toBe(BaseException);
   });
 });
