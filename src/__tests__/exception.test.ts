@@ -128,4 +128,14 @@ describe('OutOfRangeError', () => {
   it('should have the correct prototype', () => {
     expect(Object.getPrototypeOf(OutOfRangeError)).toBe(ValueError);
   });
+  it('should create the correct message', () => {
+    const error = new OutOfRangeError({
+      details: {
+        max: Infinity,
+        min: 0,
+        value: -1
+      }
+    });
+    expect(error.message).toBeTypeOf('string');
+  });
 });

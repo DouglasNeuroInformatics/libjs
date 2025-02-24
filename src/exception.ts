@@ -13,7 +13,7 @@ type ExceptionOptions = Simplify<
 >;
 
 type ExceptionParams = {
-  message?: string;
+  message?: (() => string) | string;
   name: string;
 };
 
@@ -26,7 +26,7 @@ type ExceptionInstance<TParams extends ExceptionParams, TOptions extends Excepti
 type ExceptionConstructorArgs<TParams extends ExceptionParams, TOptions extends ExceptionOptions> =
   IsNever<RequiredKeysOf<TOptions>> extends true
     ? [message?: string, options?: TOptions]
-    : TParams extends { message: string }
+    : TParams extends { message: (() => string) | string }
       ? [TOptions]
       : [message: string, options: TOptions];
 
@@ -70,7 +70,14 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
     return class extends this.base {
       override name = params.name;
       constructor(...args: ExceptionConstructorArgs<NonNullable<TParams>, TOptions>) {
-        const [message, options] = (params.message ? [params.message, args[0]] : args) as [string, TOptions];
+        let message: string | undefined, options: TOptions | undefined;
+        if (params.message) {
+          message = typeof params.message === 'function' ? params.message() : params.message;
+          options = args[0] as TOptions;
+        } else {
+          message = args[0];
+          options = args[1];
+        }
         super(message, options);
       }
     };
@@ -92,7 +99,13 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
 
 const ValueError = ExceptionBuilder.createCoreException('ValueError');
 
-const OutOfRangeError = new ExceptionBuilder().extend(ValueError).setParams({ name: 'OutOfRangeError' }).build();
+const OutOfRangeError = new ExceptionBuilder()
+  .extend(ValueError)
+  .setParams({ message: () => 'Value is out of range', name: 'OutOfRangeError' })
+  .setOptionsType<{ details: { max: number; min: number; value: number } }>()
+  .build();
+
+// super(`Value ${value} is out of range (${min} - ${max}).`);
 
 export type { ExceptionConstructor, ExceptionInstance };
 export { BaseException, ExceptionBuilder, OutOfRangeError, ValueError };
