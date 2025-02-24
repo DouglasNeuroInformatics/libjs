@@ -3,7 +3,7 @@ import { describe, expect, expectTypeOf, it, test } from 'vitest';
 
 import { BaseException, ExceptionBuilder, OutOfRangeException, ValueException } from '../exception.js';
 
-import type { ExceptionConstructor, ExceptionInstance } from '../exception.js';
+import type { ExceptionConstructor } from '../exception.js';
 
 type ExceptionOptionsWithCode = Simplify<ErrorOptions & { details: { code: number } }>;
 type ExceptionOptionsWithCause = Simplify<ErrorOptions & { cause: Error }>;
@@ -14,30 +14,27 @@ type ExceptionParamsWithMessage = Simplify<ExceptionParams & { message: string }
 
 test('ExceptionConstructor', () => {
   expectTypeOf<ExceptionConstructor<ExceptionParams, ErrorOptions>>().toEqualTypeOf<
-    new (message?: string, options?: ErrorOptions) => ExceptionInstance<ExceptionParams, ErrorOptions>
+    new (message?: string, options?: ErrorOptions) => BaseException<ExceptionParams, ErrorOptions>
   >();
   expectTypeOf<ExceptionConstructor<ExceptionParams, ExceptionOptionsWithCode>>().toEqualTypeOf<
-    new (
-      message: string,
-      options: ExceptionOptionsWithCode
-    ) => ExceptionInstance<ExceptionParams, ExceptionOptionsWithCode>
+    new (message: string, options: ExceptionOptionsWithCode) => BaseException<ExceptionParams, ExceptionOptionsWithCode>
   >();
   expectTypeOf<ExceptionConstructor<ExceptionParams, ExceptionOptionsWithCause>>().toEqualTypeOf<
     new (
       message: string,
       options: ExceptionOptionsWithCause
-    ) => ExceptionInstance<ExceptionParams, ExceptionOptionsWithCause>
+    ) => BaseException<ExceptionParams, ExceptionOptionsWithCause>
   >();
   expectTypeOf<ExceptionConstructor<ExceptionParams, ExceptionOptionsWithCodeAndCause>>().toEqualTypeOf<
     new (
       message: string,
       options: ExceptionOptionsWithCodeAndCause
-    ) => ExceptionInstance<ExceptionParams, ExceptionOptionsWithCodeAndCause>
+    ) => BaseException<ExceptionParams, ExceptionOptionsWithCodeAndCause>
   >();
   expectTypeOf<ExceptionConstructor<ExceptionParamsWithMessage, ExceptionOptionsWithCodeAndCause>>().toEqualTypeOf<
     new (
       options: ExceptionOptionsWithCodeAndCause
-    ) => ExceptionInstance<ExceptionParamsWithMessage, ExceptionOptionsWithCodeAndCause>
+    ) => BaseException<ExceptionParamsWithMessage, ExceptionOptionsWithCodeAndCause>
   >();
 });
 

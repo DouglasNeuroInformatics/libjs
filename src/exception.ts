@@ -19,12 +19,6 @@ type ExceptionParams<TDetails = any> = {
   name: ExceptionName;
 };
 
-type ExceptionInstance<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = Error & {
-  cause: TOptions['cause'];
-  details: TOptions['details'];
-  name: TParams['name'];
-};
-
 type ExceptionConstructorArgs<TParams extends ExceptionParams, TOptions extends ExceptionOptions> =
   IsNever<RequiredKeysOf<TOptions>> extends true
     ? [message?: string, options?: TOptions]
@@ -34,12 +28,9 @@ type ExceptionConstructorArgs<TParams extends ExceptionParams, TOptions extends 
 
 type ExceptionConstructor<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = new (
   ...args: ExceptionConstructorArgs<TParams, TOptions>
-) => ExceptionInstance<TParams, TOptions>;
+) => BaseException<TParams, TOptions>;
 
-abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions>
-  extends Error
-  implements ExceptionInstance<TParams, TOptions>
-{
+abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions> extends Error {
   public override cause: TOptions['cause'];
   public details: TOptions['details'];
   public abstract override name: TParams['name'];
@@ -156,5 +147,5 @@ const { OutOfRangeException } = new ExceptionBuilder()
   })
   .build();
 
-export type { ExceptionConstructor, ExceptionInstance };
+export type { ExceptionConstructor };
 export { BaseException, ExceptionBuilder, OutOfRangeException, ValueException };
