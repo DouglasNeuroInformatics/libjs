@@ -25,3 +25,9 @@ export type HasNestedKey<T, P extends string> = T extends {
   : T extends (infer U)[]
     ? HasNestedKey<U, P>
     : false;
+
+export type ToAbstractConstructor<T extends new (...args: any[]) => any> = T extends new (
+  ...args: infer TArgs extends any[]
+) => infer TReturn
+  ? abstract new (...args: TArgs) => TReturn
+  : never;
