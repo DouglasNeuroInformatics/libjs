@@ -1,5 +1,6 @@
 /* eslint-disable no-dupe-class-members */
 
+import { err } from 'neverthrow';
 import type { IsNever, RequiredKeysOf, Simplify } from 'type-fest';
 
 import type { ToAbstractConstructor } from './types.js';
@@ -39,6 +40,10 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
     super(message);
     this.cause = options?.cause;
     this.details = options?.details;
+  }
+
+  toErr() {
+    return err(this);
   }
 }
 
