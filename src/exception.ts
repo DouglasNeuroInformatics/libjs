@@ -48,7 +48,7 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
 }
 
 class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions extends ExceptionOptions> {
-  params?: TParams;
+  private params?: TParams;
 
   build(): [TParams] extends [ExceptionParams] ? ExceptionConstructor<TParams, TOptions> : never;
   build(): ExceptionConstructor<NonNullable<TParams>, TOptions> | never {
