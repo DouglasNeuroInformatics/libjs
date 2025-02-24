@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.5.0...v1.5.1) (2025-02-24)
+
+### Bug Fixes
+
+* set params to private in ExceptionBuilder ([8595ec9](https://github.com/DouglasNeuroInformatics/libjs/commit/8595ec9d074d49b386efe5b835de719206822422))
+
 ## [1.5.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.4.0...v1.5.0) (2025-02-23)
 
 ### Features
