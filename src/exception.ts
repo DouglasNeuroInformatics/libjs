@@ -4,6 +4,8 @@ import type { IsNever, RequiredKeysOf, Simplify } from 'type-fest';
 
 import type { ToAbstractConstructor } from './types.js';
 
+type ExceptionName = `${string}Exception`;
+
 type ExceptionOptions = Simplify<
   ErrorOptions & {
     details?: {
@@ -14,7 +16,7 @@ type ExceptionOptions = Simplify<
 
 type ExceptionParams<TDetails = any> = {
   message?: ((details: TDetails) => string) | string;
-  name: string;
+  name: ExceptionName;
 };
 
 type ExceptionInstance<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = Error & {
@@ -51,6 +53,14 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
 
 type CoreExceptionConstructor = ToAbstractConstructor<ExceptionConstructor<ExceptionParams, ExceptionOptions>>;
 
+type ExceptionBuildReturnType<
+  TParams extends ExceptionParams,
+  TOptions extends ExceptionOptions,
+  TStaticProps = unknown
+> = {
+  [K in TParams['name']]: ExceptionConstructor<TParams, TOptions> & TStaticProps;
+};
+
 class ExceptionBuilder<
   TParams extends ExceptionParams | undefined,
   TOptions extends ExceptionOptions,
@@ -60,14 +70,34 @@ class ExceptionBuilder<
   private base: CoreExceptionConstructor = BaseException;
   private params?: TParams;
 
-  static createCoreException<TName extends string>(name: TName): CoreExceptionConstructor {
-    return class extends BaseException<{ name: TName }, ExceptionOptions> {
+  static createCoreException<TName extends ExceptionName>(
+    name: TName
+  ): ExceptionBuildReturnType<{ name: TName }, ExceptionOptions> {
+    const constructor = class extends BaseException<{ name: TName }, ExceptionOptions> {
       override name = name;
     };
+    return this.createResult(constructor, name);
   }
 
-  build(): [TParams] extends [ExceptionParams] ? ExceptionConstructor<TParams, TOptions> & TStaticMethods : never;
-  build(): (ExceptionConstructor<NonNullable<TParams>, TOptions> & TStaticMethods) | never {
+  private static createResult<
+    TConstructorParams extends ExceptionParams,
+    TConstructorOptions extends ExceptionOptions,
+    TStaticProps = unknown
+  >(
+    constructor: ToAbstractConstructor<ExceptionConstructor<TConstructorParams, TConstructorOptions>>,
+    name: TConstructorParams['name'],
+    props?: TStaticProps
+  ) {
+    return { [name]: Object.assign(constructor, props) } as ExceptionBuildReturnType<
+      TConstructorParams,
+      TConstructorOptions,
+      TStaticProps
+    >;
+  }
+  build(): [TParams] extends [ExceptionParams]
+    ? ExceptionBuildReturnType<NonNullable<TParams>, TOptions, TStaticMethods>
+    : never;
+  build(): ExceptionBuildReturnType<NonNullable<TParams>, TOptions, TStaticMethods> | never {
     if (!this.params) {
       throw new Error('Cannot build exception: params is undefined');
     }
@@ -86,7 +116,7 @@ class ExceptionBuilder<
         super(message, options);
       }
     };
-    return Object.assign(constructor, this.staticMethods);
+    return ExceptionBuilder.createResult(constructor, params.name, this.staticMethods);
   }
 
   extend(constructor: CoreExceptionConstructor) {
@@ -112,14 +142,14 @@ class ExceptionBuilder<
   }
 }
 
-const ValueError = ExceptionBuilder.createCoreException('ValueError');
+const { ValueException } = ExceptionBuilder.createCoreException('ValueException');
 
-const OutOfRangeError = new ExceptionBuilder()
-  .extend(ValueError)
+const { OutOfRangeException } = new ExceptionBuilder()
+  .extend(ValueException)
   .setOptionsType<{ details: { max: number; min: number; value: number } }>()
   .setParams({
     message: ({ max, min, value }) => `Value ${value} is out of range (${min} - ${max})`,
-    name: 'OutOfRangeError'
+    name: 'OutOfRangeException'
   })
   .setStaticMethod('forNonPositive', function (value: number) {
     return new this({ details: { max: Infinity, min: 0, value } });
@@ -127,4 +157,4 @@ const OutOfRangeError = new ExceptionBuilder()
   .build();
 
 export type { ExceptionConstructor, ExceptionInstance };
-export { BaseException, ExceptionBuilder, OutOfRangeError, ValueError };
+export { BaseException, ExceptionBuilder, OutOfRangeException, ValueException };

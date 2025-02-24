@@ -1,7 +1,7 @@
 import type { Simplify } from 'type-fest';
 import { describe, expect, expectTypeOf, it, test } from 'vitest';
 
-import { BaseException, ExceptionBuilder, OutOfRangeError, ValueError } from '../exception.js';
+import { BaseException, ExceptionBuilder, OutOfRangeException, ValueException } from '../exception.js';
 
 import type { ExceptionConstructor, ExceptionInstance } from '../exception.js';
 
@@ -63,7 +63,7 @@ describe('ExceptionBuilder', () => {
     expectTypeOf<ReturnType<typeof fn>>().toBeNever();
   });
   it('should build an exception with the provided name and message', () => {
-    const TestException = new ExceptionBuilder().setParams({ name: 'TestException' }).build();
+    const { TestException } = new ExceptionBuilder().setParams({ name: 'TestException' }).build();
     expect(Object.getPrototypeOf(TestException)).toBe(BaseException);
     expectTypeOf<Pick<InstanceType<typeof TestException>, 'name'>>().toEqualTypeOf<{ name: 'TestException' }>();
     const error = new TestException('This is a test');
@@ -73,8 +73,8 @@ describe('ExceptionBuilder', () => {
   });
 
   it('should create distinct constructors', () => {
-    const TestException = new ExceptionBuilder().setParams({ name: 'TestException' }).build();
-    const OtherException = new ExceptionBuilder().setParams({ name: 'OtherException' }).build();
+    const { TestException } = new ExceptionBuilder().setParams({ name: 'TestException' }).build();
+    const { OtherException } = new ExceptionBuilder().setParams({ name: 'OtherException' }).build();
     const e1 = new TestException('This is a test');
     const e2 = new OtherException('This is a test');
     expect(e1).toBeInstanceOf(BaseException);
@@ -84,7 +84,7 @@ describe('ExceptionBuilder', () => {
   });
 
   it('should allow creating an exception with additional details', () => {
-    const TestException = new ExceptionBuilder()
+    const { TestException } = new ExceptionBuilder()
       .setParams({ name: 'TestException' })
       .setOptionsType<{ details: { code: number } }>()
       .build();
@@ -96,7 +96,7 @@ describe('ExceptionBuilder', () => {
   });
 
   it('should allow creating an error with a custom cause', () => {
-    const TestException = new ExceptionBuilder()
+    const { TestException } = new ExceptionBuilder()
       .setParams({ name: 'TestException' })
       .setOptionsType<{ cause: Error }>()
       .build();
@@ -108,7 +108,7 @@ describe('ExceptionBuilder', () => {
   });
 
   it('should allow creating an error with a default message', () => {
-    const TestException = new ExceptionBuilder()
+    const { TestException } = new ExceptionBuilder()
       .setParams({ message: 'Custom message', name: 'TestException' })
       .setOptionsType<{ cause: Error }>()
       .build();
@@ -118,19 +118,19 @@ describe('ExceptionBuilder', () => {
   });
 });
 
-describe('ValueError', () => {
+describe('ValueException', () => {
   it('should have the correct prototype', () => {
-    expect(Object.getPrototypeOf(ValueError)).toBe(BaseException);
+    expect(Object.getPrototypeOf(ValueException)).toBe(BaseException);
   });
 });
 
-describe('OutOfRangeError', () => {
+describe('OutOfRangeException', () => {
   it('should have the correct prototype', () => {
-    expect(Object.getPrototypeOf(OutOfRangeError)).toBe(ValueError);
+    expect(Object.getPrototypeOf(OutOfRangeException)).toBe(ValueException);
   });
   describe('constructor', () => {
     it('should create the correct message', () => {
-      const error = new OutOfRangeError({
+      const error = new OutOfRangeException({
         details: {
           max: Infinity,
           min: 0,
@@ -142,7 +142,7 @@ describe('OutOfRangeError', () => {
   });
   describe('ForNonPositive', () => {
     it('should create the correct message', () => {
-      const error = OutOfRangeError.forNonPositive(-1);
+      const error = OutOfRangeException.forNonPositive(-1);
       expect(error.message).toBe('Value -1 is out of range (0 - Infinity)');
     });
   });
