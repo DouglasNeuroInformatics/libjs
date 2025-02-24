@@ -1,7 +1,7 @@
 import type { Simplify } from 'type-fest';
 import { describe, expect, expectTypeOf, it, test } from 'vitest';
 
-import { BaseException, ExceptionBuilder, ValueError } from '../exception.js';
+import { BaseException, ExceptionBuilder, OutOfRangeError, ValueError } from '../exception.js';
 
 import type { ExceptionConstructor, ExceptionInstance } from '../exception.js';
 
@@ -121,5 +121,11 @@ describe('ExceptionBuilder', () => {
 describe('ValueError', () => {
   it('should have the correct prototype', () => {
     expect(Object.getPrototypeOf(ValueError)).toBe(BaseException);
+  });
+});
+
+describe('OutOfRangeError', () => {
+  it('should have the correct prototype', () => {
+    expect(Object.getPrototypeOf(OutOfRangeError)).toBe(ValueError);
   });
 });

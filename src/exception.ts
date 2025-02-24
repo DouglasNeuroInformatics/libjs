@@ -2,6 +2,8 @@
 
 import type { IsNever, RequiredKeysOf, Simplify } from 'type-fest';
 
+import type { ToAbstractConstructor } from './types.js';
+
 type ExceptionOptions = Simplify<
   ErrorOptions & {
     details?: {
@@ -47,10 +49,13 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
   }
 }
 
+type CoreExceptionConstructor = ToAbstractConstructor<ExceptionConstructor<ExceptionParams, ExceptionOptions>>;
+
 class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions extends ExceptionOptions> {
+  private base: CoreExceptionConstructor = BaseException;
   private params?: TParams;
 
-  static createCoreException<TName extends string>(name: TName) {
+  static createCoreException<TName extends string>(name: TName): CoreExceptionConstructor {
     return class extends BaseException<{ name: TName }, ExceptionOptions> {
       override name = name;
     };
@@ -62,13 +67,17 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
       throw new Error('Cannot build exception: params is undefined');
     }
     const params = this.params;
-    return class extends BaseException<NonNullable<TParams>, TOptions> {
+    return class extends this.base {
       override name = params.name;
       constructor(...args: ExceptionConstructorArgs<NonNullable<TParams>, TOptions>) {
         const [message, options] = (params.message ? [params.message, args[0]] : args) as [string, TOptions];
         super(message, options);
       }
     };
+  }
+  extend(constructor: CoreExceptionConstructor) {
+    this.base = constructor;
+    return this;
   }
 
   setOptionsType<TUpdatedOptions extends ExceptionOptions>() {
@@ -83,5 +92,7 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
 
 const ValueError = ExceptionBuilder.createCoreException('ValueError');
 
+const OutOfRangeError = new ExceptionBuilder().extend(ValueError).setParams({ name: 'OutOfRangeError' }).build();
+
 export type { ExceptionConstructor, ExceptionInstance };
-export { BaseException, ExceptionBuilder, ValueError };
+export { BaseException, ExceptionBuilder, OutOfRangeError, ValueError };
