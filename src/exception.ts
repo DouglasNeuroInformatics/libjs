@@ -51,7 +51,12 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
 
 type CoreExceptionConstructor = ToAbstractConstructor<ExceptionConstructor<ExceptionParams, ExceptionOptions>>;
 
-class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions extends ExceptionOptions> {
+class ExceptionBuilder<
+  TParams extends ExceptionParams | undefined,
+  TOptions extends ExceptionOptions,
+  TStaticMethods extends { [key: string]: unknown }
+> {
+  staticMethods = {} as TStaticMethods;
   private base: CoreExceptionConstructor = BaseException;
   private params?: TParams;
 
@@ -61,13 +66,13 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
     };
   }
 
-  build(): [TParams] extends [ExceptionParams] ? ExceptionConstructor<TParams, TOptions> : never;
-  build(): ExceptionConstructor<NonNullable<TParams>, TOptions> | never {
+  build(): [TParams] extends [ExceptionParams] ? ExceptionConstructor<TParams, TOptions> & TStaticMethods : never;
+  build(): (ExceptionConstructor<NonNullable<TParams>, TOptions> & TStaticMethods) | never {
     if (!this.params) {
       throw new Error('Cannot build exception: params is undefined');
     }
     const params = this.params;
-    return class extends this.base {
+    const constructor: ExceptionConstructor<NonNullable<TParams>, TOptions> = class extends this.base {
       override name = params.name;
       constructor(...args: ExceptionConstructorArgs<NonNullable<TParams>, TOptions>) {
         let message: string | undefined, options: TOptions | undefined;
@@ -81,6 +86,7 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
         super(message, options);
       }
     };
+    return Object.assign(constructor, this.staticMethods);
   }
 
   extend(constructor: CoreExceptionConstructor) {
@@ -89,12 +95,20 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
   }
 
   setOptionsType<TUpdatedOptions extends ExceptionOptions>() {
-    return this as unknown as ExceptionBuilder<TParams, TUpdatedOptions>;
+    return this as unknown as ExceptionBuilder<TParams, TUpdatedOptions, TStaticMethods>;
   }
 
   setParams<const TUpdatedParams extends ExceptionParams<TOptions['details']>>(params: TUpdatedParams) {
     this.params = params as unknown as TParams;
-    return this as unknown as ExceptionBuilder<TUpdatedParams, TOptions>;
+    return this as unknown as ExceptionBuilder<TUpdatedParams, TOptions, TStaticMethods>;
+  }
+
+  setStaticMethod<
+    TName extends string,
+    TMethod extends (this: ExceptionConstructor<NonNullable<TParams>, TOptions>, ...args: any[]) => any
+  >(name: TName, method: TMethod) {
+    this.staticMethods = { ...this.staticMethods, [name]: method };
+    return this as unknown as ExceptionBuilder<TParams, TOptions, TStaticMethods & { [K in TName]: TMethod }>;
   }
 }
 
@@ -106,6 +120,9 @@ const OutOfRangeError = new ExceptionBuilder()
   .setParams({
     message: ({ max, min, value }) => `Value ${value} is out of range (${min} - ${max})`,
     name: 'OutOfRangeError'
+  })
+  .setStaticMethod('forNonPositive', function (value: number) {
+    return new this({ details: { max: Infinity, min: 0, value } });
   })
   .build();
 
