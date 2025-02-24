@@ -136,6 +136,6 @@ describe('OutOfRangeError', () => {
         value: -1
       }
     });
-    expect(error.message).toBeTypeOf('string');
+    expect(error.message).toBe('Value -1 is out of range (0 - Infinity)');
   });
 });

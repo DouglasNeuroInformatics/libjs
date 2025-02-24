@@ -12,8 +12,8 @@ type ExceptionOptions = Simplify<
   }
 >;
 
-type ExceptionParams = {
-  message?: (() => string) | string;
+type ExceptionParams<TDetails = any> = {
+  message?: ((details: TDetails) => string) | string;
   name: string;
 };
 
@@ -26,7 +26,7 @@ type ExceptionInstance<TParams extends ExceptionParams, TOptions extends Excepti
 type ExceptionConstructorArgs<TParams extends ExceptionParams, TOptions extends ExceptionOptions> =
   IsNever<RequiredKeysOf<TOptions>> extends true
     ? [message?: string, options?: TOptions]
-    : TParams extends { message: (() => string) | string }
+    : TParams extends { message: ((details: any) => string) | string }
       ? [TOptions]
       : [message: string, options: TOptions];
 
@@ -72,8 +72,8 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
       constructor(...args: ExceptionConstructorArgs<NonNullable<TParams>, TOptions>) {
         let message: string | undefined, options: TOptions | undefined;
         if (params.message) {
-          message = typeof params.message === 'function' ? params.message() : params.message;
           options = args[0] as TOptions;
+          message = typeof params.message === 'function' ? params.message(options.details) : params.message;
         } else {
           message = args[0];
           options = args[1];
@@ -82,6 +82,7 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
       }
     };
   }
+
   extend(constructor: CoreExceptionConstructor) {
     this.base = constructor;
     return this;
@@ -91,8 +92,8 @@ class ExceptionBuilder<TParams extends ExceptionParams | undefined, TOptions ext
     return this as unknown as ExceptionBuilder<TParams, TUpdatedOptions>;
   }
 
-  setParams<const TUpdatedParams extends NonNullable<TParams>>(params: TUpdatedParams) {
-    this.params = params;
+  setParams<const TUpdatedParams extends ExceptionParams<TOptions['details']>>(params: TUpdatedParams) {
+    this.params = params as unknown as TParams;
     return this as unknown as ExceptionBuilder<TUpdatedParams, TOptions>;
   }
 }
@@ -101,11 +102,12 @@ const ValueError = ExceptionBuilder.createCoreException('ValueError');
 
 const OutOfRangeError = new ExceptionBuilder()
   .extend(ValueError)
-  .setParams({ message: () => 'Value is out of range', name: 'OutOfRangeError' })
   .setOptionsType<{ details: { max: number; min: number; value: number } }>()
+  .setParams({
+    message: ({ max, min, value }) => `Value ${value} is out of range (${min} - ${max})`,
+    name: 'OutOfRangeError'
+  })
   .build();
-
-// super(`Value ${value} is out of range (${min} - ${max}).`);
 
 export type { ExceptionConstructor, ExceptionInstance };
 export { BaseException, ExceptionBuilder, OutOfRangeError, ValueError };
