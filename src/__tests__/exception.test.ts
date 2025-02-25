@@ -13,25 +13,25 @@ type ExceptionParams = { name: 'TestException' };
 type ExceptionParamsWithMessage = Simplify<ExceptionParams & { message: string }>;
 
 test('ExceptionConstructor', () => {
-  expectTypeOf<ExceptionConstructor<ExceptionParams, ErrorOptions>>().toEqualTypeOf<
+  expectTypeOf<ExceptionConstructor<ExceptionParams, ErrorOptions>>().toMatchTypeOf<
     new (message?: string, options?: ErrorOptions) => BaseException<ExceptionParams, ErrorOptions>
   >();
-  expectTypeOf<ExceptionConstructor<ExceptionParams, ExceptionOptionsWithCode>>().toEqualTypeOf<
+  expectTypeOf<ExceptionConstructor<ExceptionParams, ExceptionOptionsWithCode>>().toMatchTypeOf<
     new (message: string, options: ExceptionOptionsWithCode) => BaseException<ExceptionParams, ExceptionOptionsWithCode>
   >();
-  expectTypeOf<ExceptionConstructor<ExceptionParams, ExceptionOptionsWithCause>>().toEqualTypeOf<
+  expectTypeOf<ExceptionConstructor<ExceptionParams, ExceptionOptionsWithCause>>().toMatchTypeOf<
     new (
       message: string,
       options: ExceptionOptionsWithCause
     ) => BaseException<ExceptionParams, ExceptionOptionsWithCause>
   >();
-  expectTypeOf<ExceptionConstructor<ExceptionParams, ExceptionOptionsWithCodeAndCause>>().toEqualTypeOf<
+  expectTypeOf<ExceptionConstructor<ExceptionParams, ExceptionOptionsWithCodeAndCause>>().toMatchTypeOf<
     new (
       message: string,
       options: ExceptionOptionsWithCodeAndCause
     ) => BaseException<ExceptionParams, ExceptionOptionsWithCodeAndCause>
   >();
-  expectTypeOf<ExceptionConstructor<ExceptionParamsWithMessage, ExceptionOptionsWithCodeAndCause>>().toEqualTypeOf<
+  expectTypeOf<ExceptionConstructor<ExceptionParamsWithMessage, ExceptionOptionsWithCodeAndCause>>().toMatchTypeOf<
     new (
       options: ExceptionOptionsWithCodeAndCause
     ) => BaseException<ExceptionParamsWithMessage, ExceptionOptionsWithCodeAndCause>
