@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable no-dupe-class-members */
 
-import { Err, err } from 'neverthrow';
+import { err, errAsync, Result, ResultAsync } from 'neverthrow';
 import type { IsNever, RequiredKeysOf } from 'type-fest';
 
 import { objectify } from './object.js';
@@ -30,8 +30,12 @@ type ExceptionConstructorArgs<TParams extends ExceptionParams, TOptions extends 
       : [message: string, options: TOptions];
 
 type ExceptionStatic<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = {
-  /** return an instance of the exception wrapped in a neverthrow Error object */
-  asErr(...args: ExceptionConstructorArgs<TParams, TOptions>): Err<never, BaseException<TParams, TOptions>>;
+  /** return an instance of the exception wrapped in a neverthrow Result */
+  asAsyncErr(
+    ...args: ExceptionConstructorArgs<TParams, TOptions>
+  ): ResultAsync<never, BaseException<TParams, TOptions>>;
+  /** return an instance of the exception wrapped in a neverthrow Result */
+  asErr(...args: ExceptionConstructorArgs<TParams, TOptions>): Result<never, BaseException<TParams, TOptions>>;
   /** inference-only property that will be undefined at runtime */
   Instance: BaseException<TParams, TOptions>;
 };
@@ -57,7 +61,11 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
     this.details = options?.details;
   }
 
-  toErr(): Err<never, this> {
+  toAsyncErr(): ResultAsync<never, this> {
+    return errAsync(this);
+  }
+
+  toErr(): Result<never, this> {
     return err(this);
   }
 }
@@ -95,9 +103,14 @@ class ExceptionBuilder<
         }
         super(message, options);
       }
+      static asAsyncErr(
+        ...args: ExceptionConstructorArgs<NonNullable<TParams>, TOptions>
+      ): ResultAsync<never, BaseException<NonNullable<TParams>, TOptions>> {
+        return new this(...args).toAsyncErr();
+      }
       static asErr(
         ...args: ExceptionConstructorArgs<NonNullable<TParams>, TOptions>
-      ): Err<never, BaseException<NonNullable<TParams>, TOptions>> {
+      ): Result<never, BaseException<NonNullable<TParams>, TOptions>> {
         return new this(...args).toErr();
       }
     };

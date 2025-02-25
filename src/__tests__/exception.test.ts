@@ -1,3 +1,4 @@
+import { Err } from 'neverthrow';
 import type { Simplify } from 'type-fest';
 import { describe, expect, expectTypeOf, it, test } from 'vitest';
 
@@ -118,6 +119,20 @@ describe('ExceptionBuilder', () => {
 describe('ValueException', () => {
   it('should have the correct prototype', () => {
     expect(Object.getPrototypeOf(ValueException)).toBe(BaseException);
+  });
+  it('should have the asErr static method', () => {
+    expect(ValueException.asErr()).toBeInstanceOf(Err);
+  });
+  it('should have the asAsyncErr static method', async () => {
+    expect(await ValueException.asAsyncErr()).toBeInstanceOf(Err);
+  });
+  it('should have the toErr method', () => {
+    const exception = new ValueException();
+    expect(exception.toErr()).toBeInstanceOf(Err);
+  });
+  it('should have the asAsyncErr static method', async () => {
+    const exception = new ValueException();
+    expect(await exception.toAsyncErr()).toBeInstanceOf(Err);
   });
 });
 
