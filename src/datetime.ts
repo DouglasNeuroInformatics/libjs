@@ -1,3 +1,8 @@
+import { err, ok } from 'neverthrow';
+import type { Result } from 'neverthrow';
+
+import { OutOfRangeException } from './exception.js';
+
 export type Duration = {
   days: number;
   hours: number;
@@ -24,7 +29,7 @@ export const TIME_MAP = new Map([
  * @param date - The Date object to be converted.
  * @returns An ISO 8601 formatted string representing the local time.
  */
-export function toLocalISOString(date: Date) {
+export function toLocalISOString(date: Date): string {
   return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, -1);
 }
 
@@ -60,7 +65,7 @@ export function yearsPassed(date: Date): number {
  * await sleep(5);
  * ```
  */
-export async function sleep(seconds: number) {
+export async function sleep(seconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
 
@@ -68,12 +73,12 @@ export async function sleep(seconds: number) {
  * Parses a given duration in milliseconds into an object representing the duration in days, hours, minutes, seconds, and milliseconds.
  *
  * @param milliseconds - The duration in milliseconds to be parsed.
- * @returns An object of type `Duration` representing the parsed duration.
- * @throws Will throw an error if the input duration is negative.
+ * @returns An result of type `Duration` representing the parsed duration. This will return an OutOfRangeException
+ * if the input is negative.
  */
-export function parseDuration(milliseconds: number): Duration {
+export function parseDuration(milliseconds: number): Result<Duration, typeof OutOfRangeException.Instance> {
   if (0 > milliseconds) {
-    throw new Error(`Cannot parse negative length of time: ${milliseconds}`);
+    return err(OutOfRangeException.forNonPositive(milliseconds));
   }
   const duration: Partial<Duration> = {};
   let remaining = milliseconds;
@@ -82,5 +87,5 @@ export function parseDuration(milliseconds: number): Duration {
     duration[`${unit}s`] = count;
     remaining %= value;
   });
-  return duration as Duration;
+  return ok(duration as Duration);
 }

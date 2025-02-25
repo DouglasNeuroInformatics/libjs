@@ -1,3 +1,5 @@
+import type { SingleKeyMap } from './types.js';
+
 export type ReadonlyDeep<T extends object> = Readonly<{
   [K in keyof T]: T[K] extends object ? ReadonlyDeep<T[K]> : T[K];
 }>;
@@ -48,13 +50,19 @@ export function isPlainObject(value: unknown): value is { [key: string]: unknown
   );
 }
 
-export function isAllUndefined<T extends { [key: string]: unknown }>(obj: T) {
+export function isAllUndefined<T extends { [key: string]: unknown }>(obj: T): boolean {
   return Object.values(obj).every((value) => value === undefined);
 }
 
 export function filterObject<T extends { [key: string]: unknown }>(
   obj: T,
   callback: (value: T[keyof T], key: keyof T) => boolean
-) {
-  return Object.fromEntries(Object.entries(obj).filter(([key, value]) => callback(value as T[keyof T], key)));
+): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([key, value]) => callback(value as T[keyof T], key))
+  ) as Partial<T>;
+}
+
+export function objectify<K extends PropertyKey, V>(key: K, value: V): SingleKeyMap<K, V> {
+  return { [key]: value } as SingleKeyMap<K, V>;
 }
