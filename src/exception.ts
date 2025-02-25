@@ -30,6 +30,7 @@ type ExceptionConstructorArgs<TParams extends ExceptionParams, TOptions extends 
 
 type ExceptionConstructor<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = {
   new (...args: ExceptionConstructorArgs<TParams, TOptions>): BaseException<TParams, TOptions>;
+  asErr(...args: ExceptionConstructorArgs<TParams, TOptions>): Err<never, BaseException<TParams, TOptions>>;
   /** inference-only property that will be undefined at runtime */
   infer: BaseException<TParams, TOptions>;
 };
@@ -114,6 +115,11 @@ class ExceptionBuilder<
           options = args[1];
         }
         super(message, options);
+      }
+      static asErr(
+        ...args: ExceptionConstructorArgs<NonNullable<TParams>, TOptions>
+      ): Err<never, BaseException<NonNullable<TParams>, TOptions>> {
+        return new this(...args).toErr();
       }
     };
     return ExceptionBuilder.createResult(constructor, params.name, this.staticMethods);
