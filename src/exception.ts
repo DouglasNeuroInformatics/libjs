@@ -73,13 +73,6 @@ class ExceptionBuilder<
   private params?: TParams;
   private staticMethods = {} as TStaticMethods;
 
-  static createCoreException<TName extends ExceptionName>(name: TName): SingleKeyMap<TName, CoreExceptionConstructor> {
-    const constructor = class extends BaseException<{ name: TName }, ExceptionOptions> {
-      override name = name;
-    };
-    return objectify(name, constructor);
-  }
-
   build(): [TParams] extends [ExceptionParams]
     ? SingleKeyMap<TParams['name'], ExceptionType<NonNullable<TParams>, TOptions, TStaticMethods>>
     : never;
@@ -140,7 +133,7 @@ class ExceptionBuilder<
   }
 }
 
-const { ValueException } = ExceptionBuilder.createCoreException('ValueException');
+const { ValueException } = new ExceptionBuilder().setParams({ name: 'ValueException' }).build();
 
 const { OutOfRangeException } = new ExceptionBuilder()
   .extend(ValueException)
