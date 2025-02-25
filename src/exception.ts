@@ -68,6 +68,16 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
   toErr(): Result<never, this> {
     return err(this);
   }
+
+  override toString(): string {
+    let result: string;
+    if (this.stack) {
+      result = this.stack;
+    } else {
+      result = `${this.name}: ${this.message}`;
+    }
+    return result;
+  }
 }
 
 type CoreExceptionConstructor = ToAbstractConstructor<ExceptionConstructor<ExceptionParams, ExceptionOptions>>;

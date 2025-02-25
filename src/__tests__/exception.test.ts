@@ -54,6 +54,20 @@ describe('BaseException', () => {
   });
 });
 
+describe('BaseException.prototype.toString', () => {
+  it('should return the name of the exception with the message, if stack is undefined', () => {
+    expect(
+      BaseException.prototype.toString.call({
+        message: 'An error occurred',
+        name: 'TestException'
+      })
+    ).toBe('TestException: An error occurred');
+  });
+  it('should return the stack if it defined', () => {
+    expect(BaseException.prototype.toString.call({ stack: '__STACK__' })).toContain('__STACK__');
+  });
+});
+
 describe('ExceptionBuilder', () => {
   it('should return never for the build method if no name is specified', () => {
     const fn = (): never => new ExceptionBuilder().build();
