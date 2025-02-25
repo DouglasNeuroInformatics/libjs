@@ -73,8 +73,8 @@ export async function sleep(seconds: number) {
  * Parses a given duration in milliseconds into an object representing the duration in days, hours, minutes, seconds, and milliseconds.
  *
  * @param milliseconds - The duration in milliseconds to be parsed.
- * @returns An result of type `Duration` representing the parsed duration.
- * @throws Will throw an error if the input duration is negative.
+ * @returns An result of type `Duration` representing the parsed duration. This will return an OutOfRangeException
+ * if the input is negative.
  */
 export function parseDuration(milliseconds: number): Result<Duration, typeof OutOfRangeException.infer> {
   if (0 > milliseconds) {
