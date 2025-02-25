@@ -63,9 +63,9 @@ class ExceptionBuilder<
   TOptions extends ExceptionOptions,
   TStaticMethods extends { [key: string]: unknown }
 > {
-  staticMethods = {} as TStaticMethods;
   private base: CoreExceptionConstructor = BaseException;
   private params?: TParams;
+  private staticMethods = {} as TStaticMethods;
 
   static createCoreException<TName extends ExceptionName>(name: TName): SingleKeyMap<TName, CoreExceptionConstructor> {
     const constructor = class extends BaseException<{ name: TName }, ExceptionOptions> {
