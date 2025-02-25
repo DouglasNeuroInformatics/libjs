@@ -36,13 +36,15 @@ type ExceptionStatic<TParams extends ExceptionParams, TOptions extends Exception
   Instance: BaseException<TParams, TOptions>;
 };
 
-type ExceptionConstructor<
+type ExceptionConstructor<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = new (
+  ...args: ExceptionConstructorArgs<TParams, TOptions>
+) => BaseException<TParams, TOptions>;
+
+type ExceptionType<
   TParams extends ExceptionParams,
   TOptions extends ExceptionOptions,
   TStaticProps = unknown
-> = ExceptionStatic<TParams, TOptions> &
-  TStaticProps &
-  (new (...args: ExceptionConstructorArgs<TParams, TOptions>) => BaseException<TParams, TOptions>);
+> = ExceptionConstructor<TParams, TOptions> & ExceptionStatic<TParams, TOptions> & TStaticProps;
 
 abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions> extends Error {
   override cause: TOptions['cause'];
@@ -79,12 +81,9 @@ class ExceptionBuilder<
   }
 
   build(): [TParams] extends [ExceptionParams]
-    ? SingleKeyMap<TParams['name'], ExceptionConstructor<NonNullable<TParams>, TOptions, TStaticMethods>>
+    ? SingleKeyMap<TParams['name'], ExceptionType<NonNullable<TParams>, TOptions, TStaticMethods>>
     : never;
-  build(): SingleKeyMap<
-    NonNullable<TParams>['name'],
-    ExceptionConstructor<NonNullable<TParams>, TOptions, TStaticMethods>
-  > {
+  build(): SingleKeyMap<NonNullable<TParams>['name'], ExceptionType<NonNullable<TParams>, TOptions, TStaticMethods>> {
     if (!this.params) {
       throw new Error('Cannot build exception: params is undefined');
     }
