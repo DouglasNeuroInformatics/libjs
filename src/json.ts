@@ -27,7 +27,7 @@ function isSerializedObject<TName extends SerializedObjectName>(
   return Boolean(value.__isSerializedType && value.__deserializedType === name);
 }
 
-export function replacer(this: unknown, key: string, value: unknown) {
+export function replacer(this: unknown, key: string, value: unknown): unknown {
   if (value instanceof Set) {
     return {
       __deserializedType: 'Set',
@@ -44,7 +44,7 @@ export function replacer(this: unknown, key: string, value: unknown) {
   return value;
 }
 
-export function reviver(_: string, value: unknown) {
+export function reviver(_: string, value: unknown): unknown {
   if (isSerializedObject(value, 'Set')) {
     return new Set(value.value);
   } else if (isSerializedObject(value, 'Date')) {

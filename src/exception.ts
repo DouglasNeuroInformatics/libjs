@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable no-dupe-class-members */
 
-import { err } from 'neverthrow';
+import { Err, err } from 'neverthrow';
 import type { IsNever, RequiredKeysOf, Simplify } from 'type-fest';
 
 import type { ToAbstractConstructor } from './types.js';
@@ -44,7 +45,7 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
     this.details = options?.details;
   }
 
-  toErr() {
+  toErr(): Err<never, this> {
     return err(this);
   }
 }
@@ -85,7 +86,7 @@ class ExceptionBuilder<
     constructor: ToAbstractConstructor<ExceptionConstructor<TConstructorParams, TConstructorOptions>>,
     name: TConstructorParams['name'],
     props?: TStaticProps
-  ) {
+  ): ExceptionBuildReturnType<TConstructorParams, TConstructorOptions, TStaticProps> {
     return { [name]: Object.assign(constructor, props) } as ExceptionBuildReturnType<
       TConstructorParams,
       TConstructorOptions,
@@ -118,26 +119,32 @@ class ExceptionBuilder<
     return ExceptionBuilder.createResult(constructor, params.name, this.staticMethods);
   }
 
-  extend(constructor: CoreExceptionConstructor) {
+  extend(constructor: CoreExceptionConstructor): this {
     this.base = constructor;
     return this;
   }
 
-  setOptionsType<TUpdatedOptions extends ExceptionOptions>() {
-    return this as unknown as ExceptionBuilder<TParams, TUpdatedOptions, TStaticMethods>;
+  setOptionsType<TUpdatedOptions extends ExceptionOptions>(): ExceptionBuilder<
+    TParams,
+    TUpdatedOptions,
+    TStaticMethods
+  > {
+    return this as any;
   }
 
-  setParams<const TUpdatedParams extends ExceptionParams<TOptions['details']>>(params: TUpdatedParams) {
+  setParams<const TUpdatedParams extends ExceptionParams<TOptions['details']>>(
+    params: TUpdatedParams
+  ): ExceptionBuilder<TUpdatedParams, TOptions, TStaticMethods> {
     this.params = params as unknown as TParams;
-    return this as unknown as ExceptionBuilder<TUpdatedParams, TOptions, TStaticMethods>;
+    return this as any;
   }
 
   setStaticMethod<
     TName extends string,
     TMethod extends (this: ExceptionConstructor<NonNullable<TParams>, TOptions>, ...args: any[]) => any
-  >(name: TName, method: TMethod) {
+  >(name: TName, method: TMethod): ExceptionBuilder<TParams, TOptions, TStaticMethods & { [K in TName]: TMethod }> {
     this.staticMethods = { ...this.staticMethods, [name]: method };
-    return this as unknown as ExceptionBuilder<TParams, TOptions, TStaticMethods & { [K in TName]: TMethod }>;
+    return this as any;
   }
 }
 

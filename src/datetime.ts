@@ -29,7 +29,7 @@ export const TIME_MAP = new Map([
  * @param date - The Date object to be converted.
  * @returns An ISO 8601 formatted string representing the local time.
  */
-export function toLocalISOString(date: Date) {
+export function toLocalISOString(date: Date): string {
   return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, -1);
 }
 
@@ -65,7 +65,7 @@ export function yearsPassed(date: Date): number {
  * await sleep(5);
  * ```
  */
-export async function sleep(seconds: number) {
+export async function sleep(seconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
 

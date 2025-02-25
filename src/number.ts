@@ -1,5 +1,5 @@
 /** Returns `true` if the value is a string representation of a number */
-export function isStringNumber(value: string) {
+export function isStringNumber(value: string): boolean {
   if (value.trim() !== '') {
     return !Number.isNaN(+value);
   }

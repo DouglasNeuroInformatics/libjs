@@ -55,7 +55,7 @@ describe('BaseException', () => {
 
 describe('ExceptionBuilder', () => {
   it('should return never for the build method if no name is specified', () => {
-    const fn = () => new ExceptionBuilder().build();
+    const fn = (): never => new ExceptionBuilder().build();
     expect(fn).toThrow('Cannot build exception: params is undefined');
     expectTypeOf<ReturnType<typeof fn>>().toBeNever();
   });

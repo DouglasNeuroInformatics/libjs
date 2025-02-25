@@ -47,7 +47,7 @@ describe('randomValue', () => {
   });
   it('should return a value in the array', () => {
     const arr = [-10, -20, -30];
-    expect(arr.includes(randomValue(arr)!));
+    expect(arr.includes(randomValue(arr)));
   });
   it('should not mutate the array', () => {
     const arr = [-10, -20, -30];
