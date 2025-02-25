@@ -29,16 +29,20 @@ type ExceptionConstructorArgs<TParams extends ExceptionParams, TOptions extends 
       ? [TOptions]
       : [message: string, options: TOptions];
 
-type ExceptionConstructor<
-  TParams extends ExceptionParams,
-  TOptions extends ExceptionOptions,
-  TStaticProps = unknown
-> = TStaticProps & {
-  new (...args: ExceptionConstructorArgs<TParams, TOptions>): BaseException<TParams, TOptions>;
+type ExceptionStatic<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = {
+  /** return an instance of the exception wrapped in a neverthrow Error object */
   asErr(...args: ExceptionConstructorArgs<TParams, TOptions>): Err<never, BaseException<TParams, TOptions>>;
   /** inference-only property that will be undefined at runtime */
   Instance: BaseException<TParams, TOptions>;
 };
+
+type ExceptionConstructor<
+  TParams extends ExceptionParams,
+  TOptions extends ExceptionOptions,
+  TStaticProps = unknown
+> = ExceptionStatic<TParams, TOptions> &
+  TStaticProps &
+  (new (...args: ExceptionConstructorArgs<TParams, TOptions>) => BaseException<TParams, TOptions>);
 
 abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions> extends Error {
   override cause: TOptions['cause'];
