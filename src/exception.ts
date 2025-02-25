@@ -2,19 +2,18 @@
 /* eslint-disable no-dupe-class-members */
 
 import { Err, err } from 'neverthrow';
-import type { IsNever, RequiredKeysOf, Simplify } from 'type-fest';
+import type { IsNever, RequiredKeysOf } from 'type-fest';
 
 import type { ToAbstractConstructor } from './types.js';
 
 type ExceptionName = `${string}Exception`;
 
-type ExceptionOptions = Simplify<
-  ErrorOptions & {
-    details?: {
-      [key: string]: unknown;
-    };
-  }
->;
+type ExceptionOptions = {
+  cause?: unknown;
+  details?: {
+    [key: string]: unknown;
+  };
+};
 
 type ExceptionParams<TDetails = any> = {
   message?: ((details: TDetails) => string) | string;
@@ -36,9 +35,9 @@ type ExceptionConstructor<TParams extends ExceptionParams, TOptions extends Exce
 };
 
 abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions> extends Error {
-  public override cause: TOptions['cause'];
-  public details: TOptions['details'];
-  public abstract override name: TParams['name'];
+  override cause: TOptions['cause'];
+  details: TOptions['details'];
+  abstract override name: TParams['name'];
 
   constructor(message?: string, options?: TOptions) {
     super(message);
