@@ -1,3 +1,8 @@
+import { err, ok } from 'neverthrow';
+import type { Result } from 'neverthrow';
+
+import { OutOfRangeException } from './exception.js';
+
 export type Duration = {
   days: number;
   hours: number;
@@ -68,12 +73,12 @@ export async function sleep(seconds: number) {
  * Parses a given duration in milliseconds into an object representing the duration in days, hours, minutes, seconds, and milliseconds.
  *
  * @param milliseconds - The duration in milliseconds to be parsed.
- * @returns An object of type `Duration` representing the parsed duration.
+ * @returns An result of type `Duration` representing the parsed duration.
  * @throws Will throw an error if the input duration is negative.
  */
-export function parseDuration(milliseconds: number): Duration {
+export function parseDuration(milliseconds: number): Result<Duration, typeof OutOfRangeException.infer> {
   if (0 > milliseconds) {
-    throw new Error(`Cannot parse negative length of time: ${milliseconds}`);
+    return err(OutOfRangeException.forNonPositive(milliseconds));
   }
   const duration: Partial<Duration> = {};
   let remaining = milliseconds;
@@ -82,5 +87,5 @@ export function parseDuration(milliseconds: number): Duration {
     duration[`${unit}s`] = count;
     remaining %= value;
   });
-  return duration as Duration;
+  return ok(duration as Duration);
 }
