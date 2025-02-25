@@ -32,7 +32,7 @@ type ExceptionConstructor<TParams extends ExceptionParams, TOptions extends Exce
   new (...args: ExceptionConstructorArgs<TParams, TOptions>): BaseException<TParams, TOptions>;
   asErr(...args: ExceptionConstructorArgs<TParams, TOptions>): Err<never, BaseException<TParams, TOptions>>;
   /** inference-only property that will be undefined at runtime */
-  infer: BaseException<TParams, TOptions>;
+  Instance: BaseException<TParams, TOptions>;
 };
 
 abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions> extends Error {
@@ -103,7 +103,7 @@ class ExceptionBuilder<
     }
     const params = this.params;
     const constructor: ExceptionConstructor<NonNullable<TParams>, TOptions> = class extends this.base {
-      static infer: BaseException<NonNullable<TParams>, TOptions>;
+      static Instance: BaseException<NonNullable<TParams>, TOptions>;
       override name = params.name;
       constructor(...args: ExceptionConstructorArgs<NonNullable<TParams>, TOptions>) {
         let message: string | undefined, options: TOptions | undefined;

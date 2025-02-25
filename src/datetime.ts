@@ -76,7 +76,7 @@ export async function sleep(seconds: number): Promise<void> {
  * @returns An result of type `Duration` representing the parsed duration. This will return an OutOfRangeException
  * if the input is negative.
  */
-export function parseDuration(milliseconds: number): Result<Duration, typeof OutOfRangeException.infer> {
+export function parseDuration(milliseconds: number): Result<Duration, typeof OutOfRangeException.Instance> {
   if (0 > milliseconds) {
     return err(OutOfRangeException.forNonPositive(milliseconds));
   }
