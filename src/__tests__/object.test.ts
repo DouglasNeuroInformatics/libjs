@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
-import { deepFreeze, filterObject, isAllUndefined, isObject, isObjectLike, isPlainObject } from '../object.js';
+import {
+  deepFreeze,
+  filterObject,
+  isAllUndefined,
+  isObject,
+  isObjectLike,
+  isPlainObject,
+  objectify
+} from '../object.js';
 
 describe('deepFreeze', () => {
   it('should not allow mutating a primitive value', () => {
@@ -94,5 +102,11 @@ describe('filterValues', () => {
     expect(filterObject({ a: 1, b: 'hello' }, (value) => typeof value === 'number')).toStrictEqual({
       a: 1
     });
+  });
+});
+
+describe('objectify', () => {
+  it('should create a single key map', () => {
+    expect(objectify('foo', 'bar')).toStrictEqual({ foo: 'bar' });
   });
 });
