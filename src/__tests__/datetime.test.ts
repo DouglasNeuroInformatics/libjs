@@ -59,10 +59,12 @@ describe('sleep', () => {
 
 describe('parseDuration', () => {
   it('should fail to parse a negative duration', () => {
-    expect(() => parseDuration(-1)).toThrow('Cannot parse negative length of time: -1');
+    const result = parseDuration(-1);
+    expect(result.isErr());
   });
   it('should parse a duration of zero', () => {
-    expect(parseDuration(0)).toEqual({
+    const result = parseDuration(0);
+    expect(result.isOk() && result.value).toEqual({
       days: 0,
       hours: 0,
       milliseconds: 0,
@@ -71,14 +73,16 @@ describe('parseDuration', () => {
     });
   });
   it('should parse a duration less than a second', () => {
-    expect(parseDuration(50)).toEqual({
+    let result = parseDuration(50);
+    expect(result.isOk() && result.value).toEqual({
       days: 0,
       hours: 0,
       milliseconds: 50,
       minutes: 0,
       seconds: 0
     });
-    expect(parseDuration(500)).toEqual({
+    result = parseDuration(500);
+    expect(result.isOk() && result.value).toEqual({
       days: 0,
       hours: 0,
       milliseconds: 500,
@@ -87,7 +91,8 @@ describe('parseDuration', () => {
     });
   });
   it('should parse a duration less than one minute but more than one second', () => {
-    expect(parseDuration(11_100)).toEqual({
+    const result = parseDuration(11_100);
+    expect(result.isOk() && result.value).toEqual({
       days: 0,
       hours: 0,
       milliseconds: 100,
@@ -96,14 +101,16 @@ describe('parseDuration', () => {
     });
   });
   it('should parse a duration less than one hour but more than one minute', () => {
-    expect(parseDuration(60_000)).toEqual({
+    let result = parseDuration(60_000);
+    expect(result.isOk() && result.value).toEqual({
       days: 0,
       hours: 0,
       milliseconds: 0,
       minutes: 1,
       seconds: 0
     });
-    expect(parseDuration(62_500)).toEqual({
+    result = parseDuration(62_500);
+    expect(result.isOk() && result.value).toEqual({
       days: 0,
       hours: 0,
       milliseconds: 500,
@@ -111,9 +118,9 @@ describe('parseDuration', () => {
       seconds: 2
     });
   });
-
   it('should parse a duration less than one day but more than one hour', () => {
-    expect(parseDuration(3_600_000)).toEqual({
+    const result = parseDuration(3_600_000);
+    expect(result.isOk() && result.value).toEqual({
       days: 0,
       hours: 1,
       milliseconds: 0,
@@ -122,14 +129,16 @@ describe('parseDuration', () => {
     });
   });
   it('should parse a duration greater than one day', () => {
-    expect(parseDuration(86_400_000)).toEqual({
+    let result = parseDuration(86_400_000);
+    expect(result.isOk() && result.value).toEqual({
       days: 1,
       hours: 0,
       milliseconds: 0,
       minutes: 0,
       seconds: 0
     });
-    expect(parseDuration(4_351_505_030)).toEqual({
+    result = parseDuration(4_351_505_030);
+    expect(result.isOk() && result.value).toEqual({
       days: 50,
       hours: 8,
       milliseconds: 30,
