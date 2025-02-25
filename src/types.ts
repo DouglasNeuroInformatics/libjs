@@ -42,5 +42,3 @@ export type SingleKeyMap<K extends PropertyKey, V> =
         }
       : never
     : never;
-
-export type B = SingleKeyMap<'a' | 'b', number>;

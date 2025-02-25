@@ -4,7 +4,9 @@
 import { Err, err } from 'neverthrow';
 import type { IsNever, RequiredKeysOf } from 'type-fest';
 
-import type { ToAbstractConstructor } from './types.js';
+import { objectify } from './object.js';
+
+import type { SingleKeyMap, ToAbstractConstructor } from './types.js';
 
 type ExceptionName = `${string}Exception`;
 
@@ -27,7 +29,11 @@ type ExceptionConstructorArgs<TParams extends ExceptionParams, TOptions extends 
       ? [TOptions]
       : [message: string, options: TOptions];
 
-type ExceptionConstructor<TParams extends ExceptionParams, TOptions extends ExceptionOptions> = {
+type ExceptionConstructor<
+  TParams extends ExceptionParams,
+  TOptions extends ExceptionOptions,
+  TStaticProps = unknown
+> = TStaticProps & {
   new (...args: ExceptionConstructorArgs<TParams, TOptions>): BaseException<TParams, TOptions>;
   asErr(...args: ExceptionConstructorArgs<TParams, TOptions>): Err<never, BaseException<TParams, TOptions>>;
   /** inference-only property that will be undefined at runtime */
@@ -52,14 +58,6 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
 
 type CoreExceptionConstructor = ToAbstractConstructor<ExceptionConstructor<ExceptionParams, ExceptionOptions>>;
 
-type ExceptionBuildReturnType<
-  TParams extends ExceptionParams,
-  TOptions extends ExceptionOptions,
-  TStaticProps = unknown
-> = {
-  [K in TParams['name']]: ExceptionConstructor<TParams, TOptions> & TStaticProps;
-};
-
 class ExceptionBuilder<
   TParams extends ExceptionParams | undefined,
   TOptions extends ExceptionOptions,
@@ -69,34 +67,20 @@ class ExceptionBuilder<
   private base: CoreExceptionConstructor = BaseException;
   private params?: TParams;
 
-  static createCoreException<TName extends ExceptionName>(
-    name: TName
-  ): ExceptionBuildReturnType<{ name: TName }, ExceptionOptions> {
+  static createCoreException<TName extends ExceptionName>(name: TName): SingleKeyMap<TName, CoreExceptionConstructor> {
     const constructor = class extends BaseException<{ name: TName }, ExceptionOptions> {
       override name = name;
     };
-    return this.createResult(constructor, name);
+    return objectify(name, constructor);
   }
 
-  private static createResult<
-    TConstructorParams extends ExceptionParams,
-    TConstructorOptions extends ExceptionOptions,
-    TStaticProps = unknown
-  >(
-    constructor: ToAbstractConstructor<ExceptionConstructor<TConstructorParams, TConstructorOptions>>,
-    name: TConstructorParams['name'],
-    props?: TStaticProps
-  ): ExceptionBuildReturnType<TConstructorParams, TConstructorOptions, TStaticProps> {
-    return { [name]: Object.assign(constructor, props) } as ExceptionBuildReturnType<
-      TConstructorParams,
-      TConstructorOptions,
-      TStaticProps
-    >;
-  }
   build(): [TParams] extends [ExceptionParams]
-    ? ExceptionBuildReturnType<NonNullable<TParams>, TOptions, TStaticMethods>
+    ? SingleKeyMap<TParams['name'], ExceptionConstructor<NonNullable<TParams>, TOptions, TStaticMethods>>
     : never;
-  build(): ExceptionBuildReturnType<NonNullable<TParams>, TOptions, TStaticMethods> | never {
+  build(): SingleKeyMap<
+    NonNullable<TParams>['name'],
+    ExceptionConstructor<NonNullable<TParams>, TOptions, TStaticMethods>
+  > {
     if (!this.params) {
       throw new Error('Cannot build exception: params is undefined');
     }
@@ -121,7 +105,7 @@ class ExceptionBuilder<
         return new this(...args).toErr();
       }
     };
-    return ExceptionBuilder.createResult(constructor, params.name, this.staticMethods);
+    return objectify(params.name, Object.assign(constructor, this.staticMethods));
   }
 
   extend(constructor: CoreExceptionConstructor): this {
