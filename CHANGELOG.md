@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.0.1...v2.1.0) (2025-02-25)
+
+### Features
+
+* add new toAsyncErr method on exceptions ([f130740](https://github.com/DouglasNeuroInformatics/libjs/commit/f1307407892c361bfe73b617d8f3ab9e31abd76e))
+
 ## [2.0.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.0.0...v2.0.1) (2025-02-25)
 
 ### Bug Fixes
