@@ -1,5 +1,34 @@
 # Changelog
 
+## [2.0.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.5.1...v2.0.0) (2025-02-25)
+
+### ⚠ BREAKING CHANGES
+
+* return result from parseDuration
+
+### Features
+
+* add asErr static method to Exception ([c693f80](https://github.com/DouglasNeuroInformatics/libjs/commit/c693f805707c7017985d6e45c53855797368c631))
+* add extend method to ExceptionBuilder ([8b9e82e](https://github.com/DouglasNeuroInformatics/libjs/commit/8b9e82e10e837e8c43cf95b9d2444ab25522b6df))
+* add infer method to exception ([fd407c7](https://github.com/DouglasNeuroInformatics/libjs/commit/fd407c71ea4d73dc7f83c7653d185ca7fb6c4af7))
+* add never type helpers ([c41c4f2](https://github.com/DouglasNeuroInformatics/libjs/commit/c41c4f2bf93408c9d61934741d67d725cc6bd144))
+* add new forNonPositive static method ([ee3bef2](https://github.com/DouglasNeuroInformatics/libjs/commit/ee3bef227c4c1b3872e7998bcc7cd7339903b97d))
+* add objectify function ([eda0085](https://github.com/DouglasNeuroInformatics/libjs/commit/eda0085ad96506e2b938b64dbd8c2215e16ae52b))
+* add static method createCoreException ([ba01022](https://github.com/DouglasNeuroInformatics/libjs/commit/ba010227a0cb72d3f3645e0903e2b2376689c173))
+* add ToAbstractConstructor ([a5ce7a0](https://github.com/DouglasNeuroInformatics/libjs/commit/a5ce7a0f9773b338db4bf8e71d3c7e3d8f973a44))
+* add toErr on exception ([fa28e13](https://github.com/DouglasNeuroInformatics/libjs/commit/fa28e13cd3dd5b97ca6b9ab61b2a8c47fcbeb76d))
+* add ValueError ([5d1d1ea](https://github.com/DouglasNeuroInformatics/libjs/commit/5d1d1eaea05177a608794a3e903f688715994ac4))
+* allow function for message in error params ([8891cc8](https://github.com/DouglasNeuroInformatics/libjs/commit/8891cc871f8517f46ea4a0e2d02411768219bbec))
+* finish OutOfRangeError ([a6a8ef6](https://github.com/DouglasNeuroInformatics/libjs/commit/a6a8ef6017ed25ec7e48df024fe5876bc8ab19b4))
+
+### Bug Fixes
+
+* linting issues ([0a714d8](https://github.com/DouglasNeuroInformatics/libjs/commit/0a714d80151deadf81ac5d6ed6f28134abd09cce))
+
+### Code Refactoring
+
+* return result from parseDuration ([71ba2cc](https://github.com/DouglasNeuroInformatics/libjs/commit/71ba2cc7ec21367ed833cc0fd48a0cb2b803c6ce))
+
 ## [1.5.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.5.0...v1.5.1) (2025-02-24)
 
 ### Bug Fixes
