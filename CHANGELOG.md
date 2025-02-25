@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.0.0...v2.0.1) (2025-02-25)
+
+### Bug Fixes
+
+* set neverthrow and zod to be peer deps ([0183162](https://github.com/DouglasNeuroInformatics/libjs/commit/0183162980cfcad35176499dd03b46a51de1ecde))
+
 ## [2.0.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v1.5.1...v2.0.0) (2025-02-25)
 
 ### ⚠ BREAKING CHANGES
