@@ -32,3 +32,7 @@ export function format(s: string, ...args: Exclude<Primitive, symbol>[]): string
   }
   return s;
 }
+
+export function indentLines(s: string, count: number): string {
+  return s.replace(/^/gm, ' '.repeat(count));
+}

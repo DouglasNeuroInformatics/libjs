@@ -4,6 +4,7 @@ import {
   camelToSnakeCase,
   capitalize,
   format,
+  indentLines,
   snakeToCamelCase,
   toLowerCase,
   toUpperCase,
@@ -65,5 +66,29 @@ describe('format', () => {
   });
   it('should ignore additional indices', () => {
     expect(format('Hello {}{}.', 'World')).toBe('Hello World{}.');
+  });
+});
+
+describe('indentLines', () => {
+  it('indents all lines with 2 spaces', () => {
+    const input = 'Hello\nWorld';
+    const expected = '  Hello\n  World';
+    expect(indentLines(input, 2)).toBe(expected);
+  });
+
+  it('indents all lines with 4 spaces', () => {
+    const input = 'Hello\nWorld';
+    const expected = '    Hello\n    World';
+    expect(indentLines(input, 4)).toBe(expected);
+  });
+
+  it('handles single-line input', () => {
+    expect(indentLines('Hello', 3)).toBe('   Hello');
+  });
+
+  it('handles multiple empty lines', () => {
+    const input = '\n\nHello\n\nWorld\n';
+    const expected = '  \n  \n  Hello\n  \n  World\n  ';
+    expect(indentLines(input, 2)).toBe(expected);
   });
 });
