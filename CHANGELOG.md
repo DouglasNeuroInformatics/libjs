@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.2.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.2.0...v2.2.1) (2025-02-26)
+
+### Bug Fixes
+
+* export more exception types ([dcab592](https://github.com/DouglasNeuroInformatics/libjs/commit/dcab592a2e893bf84f6584633ea6f2783b9e41ab))
+
 ## [2.2.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.1.0...v2.2.0) (2025-02-26)
 
 ### Features
