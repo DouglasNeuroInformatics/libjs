@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.2.2](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.2.1...v2.2.2) (2025-02-26)
+
+### Bug Fixes
+
+* add RuntimeException ([dcbe03b](https://github.com/DouglasNeuroInformatics/libjs/commit/dcbe03babee46249dd88db62ffd536d1e911035a))
+
 ## [2.2.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.2.0...v2.2.1) (2025-02-26)
 
 ### Bug Fixes
