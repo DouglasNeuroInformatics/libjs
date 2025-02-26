@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.2.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.1.0...v2.2.0) (2025-02-26)
+
+### Features
+
+* add indentLines function ([ae617db](https://github.com/DouglasNeuroInformatics/libjs/commit/ae617db5e3a84e35ae2d22f8cf92b7f697562479))
+* add toString method to exception ([af33eb6](https://github.com/DouglasNeuroInformatics/libjs/commit/af33eb6ffd654ce2e18b2fe8ddf16f4ec919aeb0))
+* finish implementing toString on exception ([a21d015](https://github.com/DouglasNeuroInformatics/libjs/commit/a21d01594c56a1d4f7f5bfd79b0ce921591e974b))
+* implement toString method on exception ([61c4d6b](https://github.com/DouglasNeuroInformatics/libjs/commit/61c4d6b5ec9138543515623d939899631865f82a))
+
 ## [2.1.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.0.1...v2.1.0) (2025-02-25)
 
 ### Features
