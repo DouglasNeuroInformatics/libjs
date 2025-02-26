@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.2.2...v2.3.0) (2025-02-26)
+
+### Features
+
+* add safeParse ([6510312](https://github.com/DouglasNeuroInformatics/libjs/commit/65103128414e3106c0a4a841e047213b2e2a488b))
+* add ValidationException ([84fd18b](https://github.com/DouglasNeuroInformatics/libjs/commit/84fd18b7c342d807b6dbbf5e92f7650a0d90fa55))
+
 ## [2.2.2](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.2.1...v2.2.2) (2025-02-26)
 
 ### Bug Fixes
