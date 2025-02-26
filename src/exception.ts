@@ -77,8 +77,8 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
     const result: string[] = [];
     this.extractCauses(this).forEach((error) => {
       result.push(this.formatError(error));
+      result.push('\nThe above exception was the cause of the following exception:\n');
     });
-    result.push('\nThe above exception was the cause of the following exception:\n');
     result.push(this.formatError(this));
     return result.join('\n');
   }

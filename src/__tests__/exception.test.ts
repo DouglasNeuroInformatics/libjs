@@ -54,20 +54,6 @@ describe('BaseException', () => {
   });
 });
 
-describe('BaseException.prototype.toString', () => {
-  it('should return the name of the exception with the message, if stack is undefined', () => {
-    expect(
-      BaseException.prototype.toString.call({
-        message: 'An error occurred',
-        name: 'TestException'
-      })
-    ).toBe('TestException: An error occurred');
-  });
-  it('should return the stack if it defined', () => {
-    expect(BaseException.prototype.toString.call({ stack: '__STACK__' })).toContain('__STACK__');
-  });
-});
-
 describe('ExceptionBuilder', () => {
   it('should return never for the build method if no name is specified', () => {
     const fn = (): never => new ExceptionBuilder().build();
@@ -131,22 +117,52 @@ describe('ExceptionBuilder', () => {
 });
 
 describe('ValueException', () => {
-  it('should have the correct prototype', () => {
-    expect(Object.getPrototypeOf(ValueException)).toBe(BaseException);
+  describe('static', () => {
+    it('should have the correct prototype', () => {
+      expect(Object.getPrototypeOf(ValueException)).toBe(BaseException);
+    });
+    it('should have the asErr static method', () => {
+      expect(ValueException.asErr()).toBeInstanceOf(Err);
+    });
+    it('should have the asAsyncErr static method', async () => {
+      expect(await ValueException.asAsyncErr()).toBeInstanceOf(Err);
+    });
   });
-  it('should have the asErr static method', () => {
-    expect(ValueException.asErr()).toBeInstanceOf(Err);
+  describe('toErr', () => {
+    it('should return an Err instance', () => {
+      const exception = new ValueException();
+      expect(exception.toErr()).toBeInstanceOf(Err);
+    });
   });
-  it('should have the asAsyncErr static method', async () => {
-    expect(await ValueException.asAsyncErr()).toBeInstanceOf(Err);
+  describe('toAsyncErr', () => {
+    it('should return an Err instance', async () => {
+      const exception = new ValueException();
+      expect(await exception.toAsyncErr()).toBeInstanceOf(Err);
+    });
   });
-  it('should have the toErr method', () => {
-    const exception = new ValueException();
-    expect(exception.toErr()).toBeInstanceOf(Err);
-  });
-  it('should have the asAsyncErr static method', async () => {
-    const exception = new ValueException();
-    expect(await exception.toAsyncErr()).toBeInstanceOf(Err);
+  describe('toString', () => {
+    const value = new ValueException('An error occurred', {
+      cause: new Error('Cause 1', {
+        cause: new Error('Cause 2')
+      }),
+      details: {
+        expected: 'number',
+        received: 'string'
+      }
+    }).toString();
+    it('should include the exception name and message', () => {
+      expect(value).toContain('ValueException: An error occurred');
+    });
+    it('should include the causes in reverse order', () => {
+      const explanations = value
+        .split('The above exception was the cause of the following exception:')
+        .map((s) => s.trim());
+      expect(explanations[0]).toMatch(/^Error: Cause 2/);
+      expect(explanations[1]).toMatch(/^Error: Cause 1/);
+    });
+    it('should include the details', () => {
+      expect(value).toMatch(/details:\s*\{\s*expected:\s*'number',\s*received:\s*'string'\s*\}/);
+    });
   });
 });
 
