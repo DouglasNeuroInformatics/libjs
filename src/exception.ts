@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable no-dupe-class-members */
 
+import cleanStack from 'clean-stack';
+import extractStack from 'extract-stack';
 import { err, errAsync, Result, ResultAsync } from 'neverthrow';
+import stringifyObject from 'stringify-object';
 import type { IsNever, RequiredKeysOf } from 'type-fest';
 
 import { objectify } from './object.js';
+import { indentLines } from './string.js';
 
 import type { SingleKeyMap, ToAbstractConstructor } from './types.js';
 
@@ -70,13 +74,34 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
   }
 
   override toString(): string {
-    let result: string;
-    if (this.stack) {
-      result = this.stack;
-    } else {
-      result = `${this.name}: ${this.message}`;
+    const result: string[] = [];
+    this.extractCauses(this).forEach((error) => {
+      result.push(this.formatError(error));
+    });
+    result.push('\nThe above exception was the cause of the following exception:\n');
+    result.push(this.formatError(this));
+    return result.join('\n');
+  }
+
+  private extractCauses(error: Error): Error[] {
+    const errors: Error[] = [];
+    let cause: unknown = error.cause;
+    while (cause instanceof Error) {
+      errors.push(cause);
+      cause = cause.cause;
     }
-    return result;
+    return errors.toReversed();
+  }
+
+  private formatError(error: Error & { details?: { [key: string]: unknown } }): string {
+    const result = [`${error.name}: ${error.message}`];
+    extractStack.lines(cleanStack(error.stack, { pretty: true })).forEach((line) => {
+      result.push(`    at ${line}`);
+    });
+    if (error.details) {
+      result.push(indentLines(`details: ${stringifyObject(error.details, { indent: '  ' })}`, 4));
+    }
+    return result.join('\n');
   }
 }
 
