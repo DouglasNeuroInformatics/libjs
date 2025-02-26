@@ -49,8 +49,8 @@ type ExceptionConstructor<TParams extends ExceptionParams, TOptions extends Exce
 ) => BaseException<TParams, TOptions>;
 
 type ExceptionType<
-  TParams extends ExceptionParams,
-  TOptions extends ExceptionOptions,
+  TParams extends ExceptionParams = ExceptionParams,
+  TOptions extends ExceptionOptions = ExceptionOptions,
   TStaticProps = unknown
 > = ExceptionConstructor<TParams, TOptions> & ExceptionStatic<TParams, TOptions> & TStaticProps;
 
@@ -195,5 +195,13 @@ const { OutOfRangeException } = new ExceptionBuilder()
   })
   .build();
 
-export type { ExceptionConstructor };
+export type {
+  ExceptionConstructor,
+  ExceptionConstructorArgs,
+  ExceptionName,
+  ExceptionOptions,
+  ExceptionParams,
+  ExceptionStatic,
+  ExceptionType
+};
 export { BaseException, ExceptionBuilder, OutOfRangeException, ValueException };
