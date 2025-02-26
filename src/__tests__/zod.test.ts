@@ -3,7 +3,7 @@ import * as module from 'node:module';
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
-import { $BooleanLike, $NumberLike, $Uint8ArrayLike, $UrlLike, isZodType } from '../zod.js';
+import { $BooleanLike, $NumberLike, $Uint8ArrayLike, $UrlLike, isZodType, safeParse } from '../zod.js';
 
 const require = module.createRequire(import.meta.url);
 
@@ -114,5 +114,29 @@ describe('$Uint8ArrayLike', () => {
     expect(result.success).toBe(true);
     expect(result.data).toBeInstanceOf(Uint8Array);
     expect([...result.data!]).toEqual([7, 8, 9]);
+  });
+});
+
+describe('safeParse', () => {
+  const $Schema = z.object({ foo: z.enum(['1', '2']).transform(Number) });
+  it('should return an Ok result with the parsed data if successful', () => {
+    const result = safeParse({ foo: '1' }, $Schema);
+    expect(result.isOk() && result.value).toStrictEqual({ foo: 1 });
+  });
+  it('should return an Err result with the data and validation issues if unsuccessful', () => {
+    const result = safeParse({ foo: '0' }, $Schema);
+    expect(result.isErr() && result.error).toMatchObject({
+      details: {
+        data: {
+          foo: '0'
+        },
+        issues: [
+          expect.objectContaining({
+            code: z.ZodIssueCode.invalid_enum_value,
+            path: ['foo']
+          })
+        ]
+      }
+    });
   });
 });

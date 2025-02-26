@@ -1,5 +1,8 @@
+import { ok } from 'neverthrow';
+import type { Result } from 'neverthrow';
 import { z } from 'zod';
 
+import { ValidationException } from './exception.js';
 import { isNumberLike, parseNumber } from './number.js';
 import { isObject } from './object.js';
 
@@ -51,3 +54,19 @@ export const $Uint8ArrayLike: z.ZodType<Uint8Array, z.ZodTypeDef, any> = z
     }
     return arg;
   });
+
+export function safeParse<TSchema extends z.ZodTypeAny>(
+  data: unknown,
+  $Schema: TSchema
+): Result<z.infer<TSchema>, typeof ValidationException.Instance> {
+  const result = $Schema.safeParse(data);
+  if (!result.success) {
+    return ValidationException.asErr({
+      details: {
+        data,
+        issues: result.error.issues
+      }
+    });
+  }
+  return ok(result.data);
+}
