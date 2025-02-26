@@ -6,6 +6,7 @@ import extractStack from 'extract-stack';
 import { err, errAsync, Result, ResultAsync } from 'neverthrow';
 import stringifyObject from 'stringify-object';
 import type { IsNever, RequiredKeysOf } from 'type-fest';
+import type { z } from 'zod';
 
 import { objectify } from './object.js';
 import { indentLines } from './string.js';
@@ -195,6 +196,11 @@ const { OutOfRangeException } = new ExceptionBuilder()
   .setStaticMethod('forNonPositive', function (value: number) {
     return new this({ details: { max: Infinity, min: 0, value } });
   })
+  .build();
+
+export const { ValidationException } = new ExceptionBuilder()
+  .setOptionsType<{ details: { data: unknown; issues: z.ZodIssue[] } }>()
+  .setParams({ message: 'Zod schema validation failed', name: 'ValidationException' })
   .build();
 
 export type {
