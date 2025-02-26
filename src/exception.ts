@@ -181,6 +181,8 @@ class ExceptionBuilder<
   }
 }
 
+const { RuntimeException } = new ExceptionBuilder().setParams({ name: 'RuntimeException' }).build();
+
 const { ValueException } = new ExceptionBuilder().setParams({ name: 'ValueException' }).build();
 
 const { OutOfRangeException } = new ExceptionBuilder()
@@ -204,4 +206,4 @@ export type {
   ExceptionStatic,
   ExceptionType
 };
-export { BaseException, ExceptionBuilder, OutOfRangeException, ValueException };
+export { BaseException, ExceptionBuilder, OutOfRangeException, RuntimeException, ValueException };
