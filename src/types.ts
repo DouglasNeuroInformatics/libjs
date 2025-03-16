@@ -42,3 +42,5 @@ export type SingleKeyMap<K extends PropertyKey, V> =
         }
       : never
     : never;
+
+export type FallbackIfNever<T, U> = [T] extends [never] ? U : T;
