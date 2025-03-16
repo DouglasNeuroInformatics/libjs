@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.4.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.3.0...v2.4.0) (2025-03-16)
+
+### Features
+
+* add FallbackIfNever type ([d29628b](https://github.com/DouglasNeuroInformatics/libjs/commit/d29628bc572e85e06e57b27a504400020c66e9c1))
+
 ## [2.3.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.2.2...v2.3.0) (2025-02-26)
 
 ### Features
