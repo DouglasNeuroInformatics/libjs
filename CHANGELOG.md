@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.6.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.5.0...v2.6.0) (2025-03-29)
+
+### Features
+
+* add parseStack function ([5b01a1c](https://github.com/DouglasNeuroInformatics/libjs/commit/5b01a1cf89ca84ce9d5ed3125b4abcc2dc628c61))
+
 ## [2.5.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.4.0...v2.5.0) (2025-03-29)
 
 ### Features
