@@ -63,6 +63,10 @@ interface ExceptionLike extends Error, ExceptionOptions {
   toString(): string;
 }
 
+function parseStack(error: Error): string[] {
+  return extractStack.lines(cleanStack(error.stack, { pretty: true }));
+}
+
 abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions>
   extends Error
   implements ExceptionLike
@@ -107,7 +111,7 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
 
   private formatError(error: Error & { details?: { [key: string]: unknown } }): string {
     const result = [`${error.name}: ${error.message}`];
-    extractStack.lines(cleanStack(error.stack, { pretty: true })).forEach((line) => {
+    parseStack(error).forEach((line) => {
       result.push(`    at ${line}`);
     });
     if (error.details) {
@@ -224,4 +228,4 @@ export type {
   ExceptionStatic,
   ExceptionType
 };
-export { BaseException, ExceptionBuilder, OutOfRangeException, RuntimeException, ValueException };
+export { BaseException, ExceptionBuilder, OutOfRangeException, parseStack, RuntimeException, ValueException };
