@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.5.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.4.0...v2.5.0) (2025-03-29)
+
+### Features
+
+* add asyncResultify ([a4c2d79](https://github.com/DouglasNeuroInformatics/libjs/commit/a4c2d790388c5adcc378792c768e0c4a727038af))
+* add ExceptionLike interface ([ac93dc1](https://github.com/DouglasNeuroInformatics/libjs/commit/ac93dc1283a57a619fd9f655d1c9f1b2d02a66b9))
+* add http module ([4ba8e4c](https://github.com/DouglasNeuroInformatics/libjs/commit/4ba8e4c1b257ca6e9d270ce80624bc714123289b))
+
 ## [2.4.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.3.0...v2.4.0) (2025-03-16)
 
 ### Features
