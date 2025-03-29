@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable no-dupe-class-members */
 
@@ -55,7 +56,17 @@ type ExceptionType<
   TStaticProps = unknown
 > = ExceptionConstructor<TParams, TOptions> & ExceptionStatic<TParams, TOptions> & TStaticProps;
 
-abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions> extends Error {
+interface ExceptionLike extends Error, ExceptionOptions {
+  name: string;
+  toAsyncErr(): ResultAsync<never, this>;
+  toErr(): Result<never, this>;
+  toString(): string;
+}
+
+abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions>
+  extends Error
+  implements ExceptionLike
+{
   override cause: TOptions['cause'];
   details: TOptions['details'];
   abstract override name: TParams['name'];
@@ -206,6 +217,7 @@ export const { ValidationException } = new ExceptionBuilder()
 export type {
   ExceptionConstructor,
   ExceptionConstructorArgs,
+  ExceptionLike,
   ExceptionName,
   ExceptionOptions,
   ExceptionParams,

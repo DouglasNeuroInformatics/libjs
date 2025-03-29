@@ -1,10 +1,8 @@
 import { config } from '@douglasneuroinformatics/eslint-config';
 
-export default config(
-  {},
-  {
-    rules: {
-      '@typescript-eslint/explicit-function-return-type': 'error'
-    }
+export default config({
+  typescript: {
+    enabled: true,
+    explicitReturnTypes: true
   }
-);
+});

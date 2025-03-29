@@ -27,8 +27,8 @@ importers:
         version: 3.24.2
     devDependencies:
       '@douglasneuroinformatics/eslint-config':
-        specifier: ^5.3.1
-        version: 5.3.1(@typescript-eslint/parser@8.24.0(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3))(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3)
+        specifier: ^5.3.2
+        version: 5.3.2(@typescript-eslint/parser@8.24.0(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3))(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3)
       '@douglasneuroinformatics/prettier-config':
         specifier: ^0.0.1
         version: 0.0.1(husky@9.1.7)(prettier@3.5.1)
@@ -210,9 +210,9 @@ packages:
       { integrity: sha512-DSHae2obMSMkAtTBSOulg5X7/z+rGLxcXQIkg3OmWvY6wifojge5uVMydfhUvs7yQj+V7jNmRZ2Xzl8GJyqRgg== }
     engines: { node: '>=v18' }
 
-  '@douglasneuroinformatics/eslint-config@5.3.1':
+  '@douglasneuroinformatics/eslint-config@5.3.2':
     resolution:
-      { integrity: sha512-Lu2lNJUvXInhK7wsfo0uDGOAkIZEJQpU+gYjjEKiQaB8vCoejF4jzKgpdyhxxvJK3kdEgox1Com7BixPV81tPQ== }
+      { integrity: sha512-bXolWczQd2ka8KIGhqUD/fvAI6gxFQSVGzBPbXQ9mF+4SEl3VrydpT13jP1hZbFvnYFJ+cX3OIb4lGLkbFZhUQ== }
     peerDependencies:
       eslint: 9.x
       typescript: 5.6.x
@@ -4294,7 +4294,7 @@ snapshots:
       '@types/conventional-commits-parser': 5.0.1
       chalk: 5.4.1
 
-  '@douglasneuroinformatics/eslint-config@5.3.1(@typescript-eslint/parser@8.24.0(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3))(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3)':
+  '@douglasneuroinformatics/eslint-config@5.3.2(@typescript-eslint/parser@8.24.0(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3))(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3)':
     dependencies:
       '@eslint/js': 9.20.0
       eslint: 9.20.1(jiti@2.4.2)
