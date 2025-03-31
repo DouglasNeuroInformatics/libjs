@@ -1,7 +1,7 @@
-import { ok } from 'neverthrow';
-import type { Result } from 'neverthrow';
-
 import { ValueException } from './exception.js';
+import { ok } from './vendor/neverthrow.js';
+
+import type { Result } from './vendor/neverthrow.js';
 
 /** Returns a random integer between `min` (inclusive) and `max` (not inclusive) */
 export function randomInt(min: number, max: number): Result<number, typeof ValueException.Instance> {

@@ -1,8 +1,7 @@
-import { ok, ResultAsync } from 'neverthrow';
-
 import { sleep } from './datetime.js';
 import { ExceptionBuilder, RuntimeException } from './exception.js';
 import { asyncResultify } from './result.js';
+import { ok, ResultAsync } from './vendor/neverthrow.js';
 
 import type { ExceptionLike } from './exception.js';
 

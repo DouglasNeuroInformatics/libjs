@@ -4,13 +4,13 @@
 
 import cleanStack from 'clean-stack';
 import extractStack from 'extract-stack';
-import { err, errAsync, Result, ResultAsync } from 'neverthrow';
 import stringifyObject from 'stringify-object';
 import type { IsNever, RequiredKeysOf } from 'type-fest';
 import type { z } from 'zod';
 
 import { objectify } from './object.js';
 import { indentLines } from './string.js';
+import { err, errAsync, Result, ResultAsync } from './vendor/neverthrow.js';
 
 import type { SingleKeyMap, ToAbstractConstructor } from './types.js';
 

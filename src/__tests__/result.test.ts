@@ -1,7 +1,7 @@
-import { Err, err, Ok, ok } from 'neverthrow';
 import { describe, expect, it } from 'vitest';
 
 import { asyncResultify } from '../result.js';
+import { Err, err, Ok, ok } from '../vendor/neverthrow.js';
 
 describe('asyncResultify', () => {
   it('should convert a successful Result to ResultAsync', async () => {

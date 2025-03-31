@@ -1,7 +1,7 @@
-import { ok } from 'neverthrow';
-import type { Result } from 'neverthrow';
-
 import { ValueException } from './exception.js';
+import { ok } from './vendor/neverthrow.js';
+
+import type { Result } from './vendor/neverthrow.js';
 
 /** Return an array of integers between 0 (inclusive) and `end` (not inclusive) */
 export function range(end: number): Result<readonly number[], typeof ValueException.Instance>;
