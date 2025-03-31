@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.7.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.6.0...v2.7.0) (2025-03-31)
+
+### Features
+
+* add vendored neverthrow ([b929098](https://github.com/DouglasNeuroInformatics/libjs/commit/b92909870d8bb081a119db1bc0f5e611033c1a51))
+
 ## [2.6.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.5.0...v2.6.0) (2025-03-29)
 
 ### Features
