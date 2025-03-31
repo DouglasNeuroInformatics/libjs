@@ -14,8 +14,16 @@
   "bugs": {
     "url": "https://github.com/DouglasNeuroInformatics/libjs/issues"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./vendor/*": {
+      "types": "./dist/vendor/*.d.ts",
+      "import": "./dist/vendor/*.js"
+    }
+  },
   "files": [
     "dist"
   ],
