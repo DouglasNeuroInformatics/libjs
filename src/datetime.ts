@@ -1,7 +1,7 @@
-import { err, ok } from 'neverthrow';
-import type { Result } from 'neverthrow';
-
 import { OutOfRangeException } from './exception.js';
+import { err, ok } from './vendor/neverthrow.js';
+
+import type { Result } from './vendor/neverthrow.js';
 
 export type Duration = {
   days: number;

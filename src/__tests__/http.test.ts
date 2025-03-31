@@ -1,8 +1,9 @@
-import type { Err } from 'neverthrow';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import * as datetime from '../datetime.js';
 import { safeFetch, waitForServer } from '../http.js';
+
+import type { Err } from '../vendor/neverthrow.js';
 
 const fetch = vi.hoisted(() => vi.fn());
 const networkError = new Error('Network Error');
