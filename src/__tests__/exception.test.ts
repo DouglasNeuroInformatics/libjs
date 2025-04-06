@@ -1,7 +1,15 @@
 import type { Simplify } from 'type-fest';
 import { describe, expect, expectTypeOf, it, test } from 'vitest';
 
-import { BaseException, ExceptionBuilder, OutOfRangeException, parseStack, ValueException } from '../exception.js';
+import {
+  BaseException,
+  errorToJSON,
+  ExceptionBuilder,
+  OutOfRangeException,
+  parseStack,
+  RuntimeException,
+  ValueException
+} from '../exception.js';
 import { Err } from '../vendor/neverthrow.js';
 
 import type { ExceptionConstructor } from '../exception.js';
@@ -194,7 +202,31 @@ describe('parseStack', () => {
   it('should return the same value, in terms of value, whether called with an error or a string', () => {
     const error = new Error();
     const r1 = parseStack(error);
-    const r2 = parseStack(error.stack!);
+    const r2 = parseStack(error.stack);
     expect(r1).toStrictEqual(r2);
+  });
+});
+
+describe('errorToJSON', () => {
+  it('should return the expected output', () => {
+    const cause = new RuntimeException('Something else went wrong', {
+      details: {
+        foo: true
+      }
+    });
+    const error = new Error('Something went wrong', { cause });
+    expect(JSON.parse(errorToJSON(error))).toStrictEqual({
+      cause: {
+        details: {
+          foo: true
+        },
+        message: 'Something else went wrong',
+        name: 'RuntimeException',
+        stack: expect.toSatisfy((arg) => Array.isArray(arg) && arg.every((item) => typeof item === 'string'))
+      },
+      message: 'Something went wrong',
+      name: 'Error',
+      stack: expect.toSatisfy((arg) => Array.isArray(arg) && arg.every((item) => typeof item === 'string'))
+    });
   });
 });

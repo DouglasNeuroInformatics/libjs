@@ -4,6 +4,7 @@
 
 import cleanStack from 'clean-stack';
 import extractStack from 'extract-stack';
+import { isErrorLike, serializeError } from 'serialize-error';
 import stringifyObject from 'stringify-object';
 import type { IsNever, RequiredKeysOf } from 'type-fest';
 import type { z } from 'zod';
@@ -68,6 +69,18 @@ function parseStack(error: Error): string[];
 function parseStack(errorOrStack: Error | string | undefined): string[] {
   const stack = typeof errorOrStack === 'string' ? errorOrStack : errorOrStack?.stack;
   return extractStack.lines(cleanStack(stack, { pretty: true }));
+}
+
+function errorToJSON(error: Error): string {
+  const serialize = (error: Error): { [key: string]: unknown } => {
+    const { cause, stack, ...serialized } = serializeError(error);
+    return {
+      ...serialized,
+      cause: isErrorLike(cause) ? serialize(cause) : cause,
+      stack: parseStack(stack)
+    };
+  };
+  return JSON.stringify(serialize(error), null, 2);
 }
 
 abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions>
@@ -231,4 +244,14 @@ export type {
   ExceptionStatic,
   ExceptionType
 };
-export { BaseException, ExceptionBuilder, OutOfRangeException, parseStack, RuntimeException, ValueException };
+
+export {
+  BaseException,
+  errorToJSON,
+  ExceptionBuilder,
+  OutOfRangeException,
+  parseStack,
+  RuntimeException,
+  serializeError,
+  ValueException
+};
