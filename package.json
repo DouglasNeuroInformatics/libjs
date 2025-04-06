@@ -44,6 +44,7 @@
   "dependencies": {
     "clean-stack": "^5.2.0",
     "extract-stack": "^3.0.0",
+    "serialize-error": "^12.0.0",
     "stringify-object": "^5.0.0",
     "type-fest": "^4.34.1"
   },
