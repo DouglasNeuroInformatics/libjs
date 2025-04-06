@@ -71,14 +71,17 @@ function parseStack(errorOrStack: Error | string | undefined): string[] {
   return extractStack.lines(cleanStack(stack, { pretty: true }));
 }
 
-function errorToJSON(error: Error): string {
+function errorToJSON(error: Error, { includeStack = true }: { includeStack?: boolean } = {}): string {
   const serialize = (error: Error): { [key: string]: unknown } => {
     const { cause, stack, ...serialized } = serializeError(error);
-    return {
+    const result: { [key: string]: unknown } = {
       ...serialized,
-      cause: isErrorLike(cause) ? serialize(cause) : cause,
-      stack: parseStack(stack)
+      cause: isErrorLike(cause) ? serialize(cause) : cause
     };
+    if (includeStack) {
+      result.stack = parseStack(stack);
+    }
+    return result;
   };
   return JSON.stringify(serialize(error), null, 2);
 }
