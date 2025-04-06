@@ -1,7 +1,7 @@
 import type { Simplify } from 'type-fest';
 import { describe, expect, expectTypeOf, it, test } from 'vitest';
 
-import { BaseException, ExceptionBuilder, OutOfRangeException, ValueException } from '../exception.js';
+import { BaseException, ExceptionBuilder, OutOfRangeException, parseStack, ValueException } from '../exception.js';
 import { Err } from '../vendor/neverthrow.js';
 
 import type { ExceptionConstructor } from '../exception.js';
@@ -187,5 +187,14 @@ describe('OutOfRangeException', () => {
       const error = OutOfRangeException.forNonPositive(-1);
       expect(error.message).toBe('Value -1 is out of range (0 - Infinity)');
     });
+  });
+});
+
+describe('parseStack', () => {
+  it('should return the same value, in terms of value, whether called with an error or a string', () => {
+    const error = new Error();
+    const r1 = parseStack(error);
+    const r2 = parseStack(error.stack!);
+    expect(r1).toStrictEqual(r2);
   });
 });

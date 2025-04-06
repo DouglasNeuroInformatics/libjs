@@ -63,8 +63,11 @@ interface ExceptionLike extends Error, ExceptionOptions {
   toString(): string;
 }
 
-function parseStack(error: Error): string[] {
-  return extractStack.lines(cleanStack(error.stack, { pretty: true }));
+function parseStack(stack: string | undefined): string[];
+function parseStack(error: Error): string[];
+function parseStack(errorOrStack: Error | string | undefined): string[] {
+  const stack = typeof errorOrStack === 'string' ? errorOrStack : errorOrStack?.stack;
+  return extractStack.lines(cleanStack(stack, { pretty: true }));
 }
 
 abstract class BaseException<TParams extends ExceptionParams, TOptions extends ExceptionOptions>
