@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.7.0...v2.8.0) (2025-04-06)
+
+### Features
+
+* add errorToJSON function ([d30564d](https://github.com/DouglasNeuroInformatics/libjs/commit/d30564d396fd9bee0b689b96ab4d4c5344904b42))
+* allow calling parseStack with string ([ec03ec3](https://github.com/DouglasNeuroInformatics/libjs/commit/ec03ec39fde75bfb27f23096cbaa614cc6c9f3ae))
+
 ## [2.7.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.6.0...v2.7.0) (2025-03-31)
 
 ### Features
