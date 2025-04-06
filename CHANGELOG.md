@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.8.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.8.0...v2.8.1) (2025-04-06)
+
+### Bug Fixes
+
+* add includeStack option to errorToJSON ([48af62c](https://github.com/DouglasNeuroInformatics/libjs/commit/48af62c9ac984fe6aea979ca103f4fc53ff91e9e))
+
 ## [2.8.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.7.0...v2.8.0) (2025-04-06)
 
 ### Features
