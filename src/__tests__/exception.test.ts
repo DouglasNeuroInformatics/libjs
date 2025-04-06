@@ -208,13 +208,13 @@ describe('parseStack', () => {
 });
 
 describe('errorToJSON', () => {
+  const cause = new RuntimeException('Something else went wrong', {
+    details: {
+      foo: true
+    }
+  });
+  const error = new Error('Something went wrong', { cause });
   it('should return the expected output', () => {
-    const cause = new RuntimeException('Something else went wrong', {
-      details: {
-        foo: true
-      }
-    });
-    const error = new Error('Something went wrong', { cause });
     expect(JSON.parse(errorToJSON(error))).toStrictEqual({
       cause: {
         details: {
@@ -227,6 +227,19 @@ describe('errorToJSON', () => {
       message: 'Something went wrong',
       name: 'Error',
       stack: expect.toSatisfy((arg) => Array.isArray(arg) && arg.every((item) => typeof item === 'string'))
+    });
+  });
+  it('should not include the stack, if set in the options', () => {
+    expect(JSON.parse(errorToJSON(error, { includeStack: false }))).toStrictEqual({
+      cause: {
+        details: {
+          foo: true
+        },
+        message: 'Something else went wrong',
+        name: 'RuntimeException'
+      },
+      message: 'Something went wrong',
+      name: 'Error'
     });
   });
 });
