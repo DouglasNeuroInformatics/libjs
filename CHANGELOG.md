@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.9.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.8.1...v2.9.0) (2025-04-19)
+
+### Features
+
+* add formatByteSize ([069f71f](https://github.com/DouglasNeuroInformatics/libjs/commit/069f71f66c6b61552c649b0ffd09f6af2be166dc))
+
 ## [2.8.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.8.0...v2.8.1) (2025-04-06)
 
 ### Bug Fixes
