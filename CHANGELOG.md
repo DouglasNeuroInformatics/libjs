@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.2](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.0.1...v3.0.2) (2025-05-30)
+
+### Bug Fixes
+
+* issue preventing inference of _output in ZodTypeLike in some cases ([994a550](https://github.com/DouglasNeuroInformatics/libjs/commit/994a5501cb9ee13eedb0e0763ad083c8002ff526))
+
 ## [3.0.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.0.0...v3.0.1) (2025-05-30)
 
 ### Bug Fixes
