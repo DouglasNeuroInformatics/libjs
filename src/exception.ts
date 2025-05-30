@@ -8,7 +8,7 @@ import { err, errAsync, Result, ResultAsync } from 'neverthrow';
 import { isErrorLike, serializeError } from 'serialize-error';
 import stringifyObject from 'stringify-object';
 import type { IsNever, RequiredKeysOf } from 'type-fest';
-import type { z } from 'zod';
+import type { z } from 'zod/v4';
 
 import { objectify } from './object.js';
 import { indentLines } from './string.js';
@@ -233,7 +233,7 @@ const { OutOfRangeException } = new ExceptionBuilder()
   .build();
 
 export const { ValidationException } = new ExceptionBuilder()
-  .setOptionsType<{ details: { data: unknown; issues: z.ZodIssue[] } }>()
+  .setOptionsType<{ details: { data: unknown; issues: z.core.$ZodIssue[] } }>()
   .setParams({ message: 'Zod schema validation failed', name: 'ValidationException' })
   .build();
 
