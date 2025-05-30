@@ -1,6 +1,8 @@
-import { expectTypeOf, test } from 'vitest';
-import type { z as z3 } from 'zod/v3';
-import type { z as z4 } from 'zod/v4';
+import { describe, expect, expectTypeOf, it, test } from 'vitest';
+import { z as z3 } from 'zod/v3';
+import { z as z4 } from 'zod/v4';
+
+import { isZodTypeLike } from '../zod4.js';
 
 import type {
   ZodErrorLike,
@@ -47,4 +49,23 @@ test('ZodTypeLike', () => {
   expectTypeOf<z4.ZodNumber>().toMatchTypeOf<ZodTypeLike<unknown>>();
   expectTypeOf<z4.ZodNumber>().toMatchTypeOf<ZodTypeLike<number>>();
   expectTypeOf<z4.ZodNumber>().not.toMatchTypeOf<ZodTypeLike<string>>();
+});
+
+describe('isZodTypeLike', () => {
+  it('should return true for Zod v3 types', () => {
+    expect(isZodTypeLike(z3.object({}))).toBe(true);
+    expect(isZodTypeLike(z3.number())).toBe(true);
+    expect(isZodTypeLike(z3.any())).toBe(true);
+  });
+  it('should return true for Zod v4 types', () => {
+    expect(isZodTypeLike(z4.object({}))).toBe(true);
+    expect(isZodTypeLike(z4.number())).toBe(true);
+    expect(isZodTypeLike(z4.any())).toBe(true);
+  });
+  it('should return false for an object without a standard schema', () => {
+    expect(isZodTypeLike({})).toBe(false);
+  });
+  it('should return false for an object with a standard schema, but the incorrect vendor name', () => {
+    expect(isZodTypeLike({ '~standard': { vendor: 'DNP' } })).toBe(false);
+  });
 });

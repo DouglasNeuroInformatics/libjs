@@ -1,3 +1,5 @@
+import { isObjectLike, isPlainObject } from './object.js';
+
 export type ZodIssueLike = {
   [key: string]: any;
   readonly code: string;
@@ -29,4 +31,16 @@ export type ZodTypeLike<TOutput, TInput = unknown> = {
   readonly _input: TInput;
   readonly _output: TOutput;
   safeParseAsync: (data: unknown) => Promise<ZodSafeParseResultLike<TOutput>>;
+  '~standard': {
+    [key: string]: any;
+    vendor: string;
+  };
 };
+
+export function isZodTypeLike(arg: unknown): arg is ZodTypeLike<unknown> {
+  if (!isObjectLike(arg)) {
+    return false;
+  }
+  const standardSchema: unknown = Reflect.get(arg, '~standard');
+  return isPlainObject(standardSchema) && standardSchema.vendor === 'zod';
+}
