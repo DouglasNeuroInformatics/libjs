@@ -38,7 +38,7 @@ type ZodTypeLike<TOutput, TInput = unknown> = {
   [key: string]: any;
   readonly _input: TInput;
   readonly _output: TOutput;
-  safeParseAsync: (data: unknown) => Promise<ZodSafeParseResultLike<TOutput>>;
+  safeParseAsync: (data: unknown) => Promise<ZodSafeParseResultLike<NoInfer<TOutput>>>;
   '~standard': {
     [key: string]: any;
     vendor: string;
