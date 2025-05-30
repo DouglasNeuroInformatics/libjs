@@ -4,7 +4,7 @@ export function asyncResultify<T, E>(fn: () => Promise<Result<T, E>>): ResultAsy
   return new ResultAsync(fn());
 }
 
-export function unwrap<T, E extends Error>(result: Result<T, E>): any {
+export function unwrap<T, E extends Error>(result: Result<T, E>): T {
   if (result.isErr()) {
     throw result.error;
   }
