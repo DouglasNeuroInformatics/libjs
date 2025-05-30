@@ -1,11 +1,10 @@
+import { ok } from 'neverthrow';
+import type { Result } from 'neverthrow';
 import { z } from 'zod';
 
 import { ValidationException } from './exception.js';
 import { isNumberLike, parseNumber } from './number.js';
 import { isObject } from './object.js';
-import { ok } from './vendor/neverthrow.js';
-
-import type { Result } from './vendor/neverthrow.js';
 
 /** Used to determine if object is of type `ZodType` independent of specific instances or library versions */
 export function isZodType(arg: unknown): arg is z.ZodTypeAny {

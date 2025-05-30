@@ -1,3 +1,4 @@
+import { Err } from 'neverthrow';
 import type { Simplify } from 'type-fest';
 import { describe, expect, expectTypeOf, it, test } from 'vitest';
 
@@ -10,7 +11,6 @@ import {
   RuntimeException,
   ValueException
 } from '../exception.js';
-import { Err } from '../vendor/neverthrow.js';
 
 import type { ExceptionConstructor } from '../exception.js';
 
