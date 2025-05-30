@@ -1,7 +1,7 @@
+import { Err, err, Ok, ok } from 'neverthrow';
 import { describe, expect, it } from 'vitest';
 
-import { asyncResultify } from '../result.js';
-import { Err, err, Ok, ok } from '../vendor/neverthrow.js';
+import { asyncResultify, unwrap } from '../result.js';
 
 describe('asyncResultify', () => {
   it('should convert a successful Result to ResultAsync', async () => {
@@ -27,5 +27,15 @@ describe('asyncResultify', () => {
     const result = (await asyncResultify(fn)) as Ok<string, never>;
     expect(result.isOk()).toBe(true);
     expect(result.value).toBe('delayed result');
+  });
+});
+
+describe('unwrap', () => {
+  it('should throw if the result is an Error', () => {
+    const error = new Error('Something went wrong!');
+    expect(() => unwrap(err(error))).toThrow(error);
+  });
+  it('should return if the result is Ok', () => {
+    expect(unwrap(ok(5))).toBe(5);
   });
 });

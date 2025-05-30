@@ -18,10 +18,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    },
-    "./vendor/*": {
-      "types": "./dist/vendor/*.d.ts",
-      "import": "./dist/vendor/*.js"
     }
   },
   "files": [
@@ -39,7 +35,7 @@
   },
   "peerDependencies": {
     "neverthrow": "^8.2.0",
-    "zod": "^3.22.6"
+    "zod": "^3.25.x"
   },
   "dependencies": {
     "clean-stack": "^5.2.0",
