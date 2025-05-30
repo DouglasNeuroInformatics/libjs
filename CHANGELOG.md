@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.0.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.9.0...v3.0.0) (2025-05-30)
+
+### ⚠ BREAKING CHANGES
+
+* All Zod helpers now use v4
+* use unwrap utility rather than importing neverthrow from libjs
+
+### Features
+
+* add isZodTypeLike ([e6540a5](https://github.com/DouglasNeuroInformatics/libjs/commit/e6540a52fccb2304238c4bf81dd495c461755eeb))
+* add neverthrow module ([4a66cbb](https://github.com/DouglasNeuroInformatics/libjs/commit/4a66cbb13319eab60cb5e8b386c44e70cc0c6d6d))
+
+### Code Refactoring
+
+* finalize conversion to Zod v4 ([c29326f](https://github.com/DouglasNeuroInformatics/libjs/commit/c29326fb41a23c8bfb10e18343bb2013b9002068))
+* remove vendored neverthrow ([05821c4](https://github.com/DouglasNeuroInformatics/libjs/commit/05821c41daa0d5b41e2927fbf39b49c609fcb012))
+
 ## [2.9.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.8.1...v2.9.0) (2025-04-19)
 
 ### Features
