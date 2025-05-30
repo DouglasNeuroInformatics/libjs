@@ -72,27 +72,62 @@ describe('isZodTypeLike', () => {
 });
 
 describe('isZodType', () => {
-  // since we use require here, the prototype chain in the cjs module will be different than the esm build
-  const { z: z3_2 } = require('zod/v3') as typeof import('zod/v3');
+  describe('v3', () => {
+    // since we use require here, the prototype chain in the cjs module will be different than the esm build
+    const { z: z3_2 } = require('zod/v3') as typeof import('zod/v3');
 
-  it('should return true for an instance of ZodNumber', () => {
-    expect(isZodType(z3.number(), { version: 3 })).toBe(true);
+    it('should return true for an instance of ZodNumber', () => {
+      expect(isZodType(z3.number(), { version: 3 })).toBe(true);
+    });
+    it('should return true for an instance of ZodObject', () => {
+      expect(isZodType(z3.object({}), { version: 3 })).toBe(true);
+    });
+    it('should return false for null', () => {
+      expect(isZodType(null, { version: 3 })).toBe(false);
+    });
+    it('should return false for any empty object', () => {
+      expect(isZodType({}, { version: 3 })).toBe(false);
+    });
+    it('should return false for an object with a null prototype', () => {
+      expect(isZodType(Object.create(null), { version: 3 })).toBe(false);
+    });
+    it('should return false for a Zod v4 object', () => {
+      expect(isZodType(z4.object({}), { version: 3 })).toBe(false);
+    });
+    it('should return true for a ZodObject created in a different context', () => {
+      const input = z3_2.object({});
+      expect(input).not.toBeInstanceOf(z3.ZodType);
+      expect(isZodType(input, { version: 3 })).toBe(true);
+    });
   });
-  it('should return true for an instance of ZodObject', () => {
-    expect(isZodType(z3.object({}), { version: 3 })).toBe(true);
-  });
-  it('should return false for null', () => {
-    expect(isZodType(null, { version: 3 })).toBe(false);
-  });
-  it('should return false for any empty object', () => {
-    expect(isZodType({}, { version: 3 })).toBe(false);
-  });
-  it('should return false for an object with a null prototype', () => {
-    expect(isZodType(Object.create(null), { version: 3 })).toBe(false);
-  });
-  it('should return true for a ZodObject created in a different context', () => {
-    const input = z3_2.object({});
-    expect(input).not.toBeInstanceOf(z3.ZodType);
-    expect(isZodType(input, { version: 3 })).toBe(true);
+  describe('v4', () => {
+    it('should return true for an instance of ZodNumber', () => {
+      expect(isZodType(z4.number(), { version: 4 })).toBe(true);
+    });
+    it('should return true for an instance of ZodObject', () => {
+      expect(isZodType(z4.object({}), { version: 4 })).toBe(true);
+    });
+    it('should return false for null', () => {
+      expect(isZodType(null, { version: 4 })).toBe(false);
+    });
+    it('should return false for any empty object', () => {
+      expect(isZodType({}, { version: 4 })).toBe(false);
+    });
+    it('should return false for a Zod v3 object', () => {
+      expect(isZodType(z3.object({}), { version: 4 })).toBe(false);
+    });
+    it('should return true for a ZodObject created in a different context', () => {
+      const base = z4.object({});
+      const input = {
+        _zod: {
+          version: structuredClone(base._zod.version)
+        },
+        '~standard': {
+          vendor: base['~standard'].vendor
+        }
+      };
+      expect(input).not.toBeInstanceOf(z4.ZodType);
+      expect(isZodType(input, { version: 4 })).toBe(true);
+    });
   });
 });
