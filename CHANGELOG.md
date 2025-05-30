@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.0.0...v3.0.1) (2025-05-30)
+
+### Bug Fixes
+
+* incorrect type for unwrap function ([5ceda1b](https://github.com/DouglasNeuroInformatics/libjs/commit/5ceda1bc76ae1d901ed916eb2e3c8926708b1285))
+
 ## [3.0.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v2.9.0...v3.0.0) (2025-05-30)
 
 ### ⚠ BREAKING CHANGES
