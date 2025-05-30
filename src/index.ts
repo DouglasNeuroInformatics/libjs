@@ -3,7 +3,6 @@ export * from './datetime.js';
 export * from './exception.js';
 export * from './http.js';
 export * from './json.js';
-export * from './neverthrow.js';
 export * from './number.js';
 export * from './object.js';
 export * from './random.js';
