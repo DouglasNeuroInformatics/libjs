@@ -1,13 +1,59 @@
 import { ok } from 'neverthrow';
 import type { Result } from 'neverthrow';
-import { z } from 'zod';
+import type { z as z3 } from 'zod/v3';
+import { z as z4 } from 'zod/v4';
 
 import { ValidationException } from './exception.js';
 import { isNumberLike, parseNumber } from './number.js';
-import { isObject } from './object.js';
+import { isObject, isObjectLike, isPlainObject } from './object.js';
 
-/** Used to determine if object is of type `ZodType` independent of specific instances or library versions */
-export function isZodType(arg: unknown): arg is z.ZodTypeAny {
+type ZodIssueLike = {
+  [key: string]: any;
+  readonly code: string;
+  readonly message: string;
+  readonly path: PropertyKey[];
+};
+
+type ZodErrorLike = {
+  cause?: unknown;
+  issues: ZodIssueLike[];
+  name: string;
+};
+
+type ZodSafeParseSuccessLike<TOutput> = {
+  data: TOutput;
+  error?: never;
+  success: true;
+};
+
+type ZodSafeParseErrorLike = {
+  data?: never;
+  error: ZodErrorLike;
+  success: false;
+};
+
+type ZodSafeParseResultLike<T> = ZodSafeParseErrorLike | ZodSafeParseSuccessLike<T>;
+
+type ZodTypeLike<TOutput, TInput = unknown> = {
+  [key: string]: any;
+  readonly _input: TInput;
+  readonly _output: TOutput;
+  safeParseAsync: (data: unknown) => Promise<ZodSafeParseResultLike<TOutput>>;
+  '~standard': {
+    [key: string]: any;
+    vendor: string;
+  };
+};
+
+function isZodTypeLike(arg: unknown): arg is ZodTypeLike<unknown> {
+  if (!isObjectLike(arg)) {
+    return false;
+  }
+  const standardSchema: unknown = Reflect.get(arg, '~standard');
+  return isPlainObject(standardSchema) && standardSchema.vendor === 'zod';
+}
+
+function isZodV3Type(arg: unknown): arg is z3.ZodTypeAny {
   let prototype: null | object = null;
   if (isObject(arg) && isObject(arg.constructor)) {
     prototype = Reflect.getPrototypeOf(arg.constructor);
@@ -15,7 +61,25 @@ export function isZodType(arg: unknown): arg is z.ZodTypeAny {
   return Boolean(prototype && Reflect.get(prototype, 'name') === 'ZodType');
 }
 
-export const $BooleanLike: z.ZodType<boolean, z.ZodTypeDef, any> = z.preprocess((arg) => {
+function isZodV4Type(arg: unknown): arg is z4.ZodType {
+  if (!isZodTypeLike(arg)) {
+    return false;
+  }
+  const zod: unknown = arg._zod;
+  if (!isPlainObject(zod)) {
+    return false;
+  }
+  const version: unknown = zod.version;
+  return isPlainObject(version) && version.major === 4;
+}
+
+function isZodType(arg: unknown, options: { version: 3 }): arg is z3.ZodTypeAny;
+function isZodType(arg: unknown, options: { version: 4 }): arg is z4.ZodType;
+function isZodType(arg: unknown, options: { version: 3 | 4 }): boolean {
+  return options.version === 3 ? isZodV3Type(arg) : isZodV4Type(arg);
+}
+
+export const $BooleanLike: z4.ZodType<boolean> = z4.preprocess((arg) => {
   if (typeof arg === 'string') {
     if (arg.trim().toLowerCase() === 'true') {
       return true;
@@ -24,30 +88,30 @@ export const $BooleanLike: z.ZodType<boolean, z.ZodTypeDef, any> = z.preprocess(
     }
   }
   return arg;
-}, z.boolean());
+}, z4.boolean());
 
-export const $NumberLike: z.ZodType<number, z.ZodTypeDef, any> = z.preprocess((arg) => {
+export const $NumberLike: z4.ZodType<number> = z4.preprocess((arg) => {
   if (isNumberLike(arg)) {
     return parseNumber(arg);
   }
   return arg;
-}, z.number());
+}, z4.number());
 
-export const $UrlLike: z.ZodType<URL, z.ZodTypeDef, any> = z.preprocess(
+export const $UrlLike: z4.ZodType<URL> = z4.preprocess(
   (arg) => {
     if (arg instanceof URL) {
       return arg.href;
     }
     return arg;
   },
-  z
+  z4
     .string()
     .url()
     .transform((arg) => new URL(arg))
 );
 
-export const $Uint8ArrayLike: z.ZodType<Uint8Array, z.ZodTypeDef, any> = z
-  .union([z.array(z.number().int().min(0).max(255)), z.instanceof(Uint8Array), z.instanceof(ArrayBuffer)])
+export const $Uint8ArrayLike: z4.ZodType<Uint8Array> = z4
+  .union([z4.array(z4.number().int().min(0).max(255)), z4.instanceof(Uint8Array), z4.instanceof(ArrayBuffer)])
   .transform((arg) => {
     if (!(arg instanceof Uint8Array)) {
       return new Uint8Array(arg);
@@ -55,10 +119,10 @@ export const $Uint8ArrayLike: z.ZodType<Uint8Array, z.ZodTypeDef, any> = z
     return arg;
   });
 
-export function safeParse<TSchema extends z.ZodTypeAny>(
+export function safeParse<TSchema extends z4.ZodTypeAny>(
   data: unknown,
   $Schema: TSchema
-): Result<z.infer<TSchema>, typeof ValidationException.Instance> {
+): Result<z4.infer<TSchema>, typeof ValidationException.Instance> {
   const result = $Schema.safeParse(data);
   if (!result.success) {
     return ValidationException.asErr({
@@ -70,3 +134,13 @@ export function safeParse<TSchema extends z.ZodTypeAny>(
   }
   return ok(result.data);
 }
+
+export { isZodType, isZodTypeLike };
+export type {
+  ZodErrorLike,
+  ZodIssueLike,
+  ZodSafeParseErrorLike,
+  ZodSafeParseResultLike,
+  ZodSafeParseSuccessLike,
+  ZodTypeLike
+};
