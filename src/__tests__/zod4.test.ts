@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { describe, expect, expectTypeOf, it, test } from 'vitest';
 import { z as z3 } from 'zod/v3';
 import { z as z4 } from 'zod/v4';
 
-import { isZodTypeLike } from '../zod4.js';
+import { isZodTypeLike, isZodV3Type } from '../zod4.js';
 
 import type {
   ZodErrorLike,
@@ -67,5 +68,31 @@ describe('isZodTypeLike', () => {
   });
   it('should return false for an object with a standard schema, but the incorrect vendor name', () => {
     expect(isZodTypeLike({ '~standard': { vendor: 'DNP' } })).toBe(false);
+  });
+});
+
+describe('isZodV3Type', () => {
+  // since we use require here, the prototype chain in the cjs module will be different than the esm build
+  const { z: z3_2 } = require('zod/v3') as typeof import('zod/v3');
+
+  it('should return true for an instance of ZodNumber', () => {
+    expect(isZodV3Type(z3.number())).toBe(true);
+  });
+  it('should return true for an instance of ZodObject', () => {
+    expect(isZodV3Type(z3.object({}))).toBe(true);
+  });
+  it('should return false for null', () => {
+    expect(isZodV3Type(null)).toBe(false);
+  });
+  it('should return false for any empty object', () => {
+    expect(isZodV3Type({})).toBe(false);
+  });
+  it('should return false for an object with a null prototype', () => {
+    expect(isZodV3Type(Object.create(null))).toBe(false);
+  });
+  it('should return true for a ZodObject created in a different context', () => {
+    const input = z3_2.object({});
+    expect(input).not.toBeInstanceOf(z3.ZodType);
+    expect(isZodV3Type(input)).toBe(true);
   });
 });

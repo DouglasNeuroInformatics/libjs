@@ -1,4 +1,6 @@
-import { isObjectLike, isPlainObject } from './object.js';
+import type { z as z3 } from 'zod/v3';
+
+import { isObject, isObjectLike, isPlainObject } from './object.js';
 
 export type ZodIssueLike = {
   [key: string]: any;
@@ -43,4 +45,12 @@ export function isZodTypeLike(arg: unknown): arg is ZodTypeLike<unknown> {
   }
   const standardSchema: unknown = Reflect.get(arg, '~standard');
   return isPlainObject(standardSchema) && standardSchema.vendor === 'zod';
+}
+
+export function isZodV3Type(arg: unknown): arg is z3.ZodTypeAny {
+  let prototype: null | object = null;
+  if (isObject(arg) && isObject(arg.constructor)) {
+    prototype = Reflect.getPrototypeOf(arg.constructor);
+  }
+  return Boolean(prototype && Reflect.get(prototype, 'name') === 'ZodType');
 }
