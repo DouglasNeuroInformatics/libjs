@@ -124,7 +124,7 @@ export const $AnyFunction = z4.custom<(...args: any[]) => any>((arg) => typeof a
 export const $$Function = <TInput extends z4.ZodType<unknown[], unknown[]>, TOutput extends z4.ZodTypeAny>(params?: {
   input: TInput;
   output: TOutput;
-}): z4.ZodCustom<(...args: z4.output<TInput>) => z4.output<TOutput>> => {
+}): z4.ZodType<(...args: z4.output<TInput>) => z4.output<TOutput>> => {
   const $Schema: z4.core.$ZodFunction<TInput, TOutput> = z4.function(params);
   return z4.custom<(...args: z4.output<TInput>) => z4.output<TOutput>>((fn) => {
     if (typeof fn !== 'function') {

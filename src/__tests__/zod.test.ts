@@ -246,6 +246,11 @@ describe('$$Function', () => {
   it('should fail to validate a non-function', () => {
     expect($Schema.safeParse('').success).toBe(false);
   });
+  it('should return a function that throws when called with the incorrect number of arguments', () => {
+    const fn = $Schema.parse((..._args: any[]) => 0) as (...args: any[]) => number;
+    expect(() => fn(1)).toThrow();
+    expect(() => fn(1, 2, 3)).toThrow();
+  });
 });
 
 describe('safeParse', () => {
