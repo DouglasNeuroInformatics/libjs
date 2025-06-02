@@ -251,6 +251,14 @@ describe('$$Function', () => {
     expect(() => fn(1)).toThrow();
     expect(() => fn(1, 2, 3)).toThrow();
   });
+  it('should return a function that throws when it returns an invalid value', () => {
+    const fn = $Schema.parse((..._args: any[]) => 'hello') as (...args: any[]) => any;
+    expect(() => fn(1, 2)).toThrow();
+  });
+  it('should return a function that returns a valid value, when called with valid inputs', () => {
+    const fn = $Schema.parse((a: number, b: number) => a + b);
+    expect(fn(1, 2)).toBe(3);
+  });
 });
 
 describe('safeParse', () => {
