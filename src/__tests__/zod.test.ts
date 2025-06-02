@@ -3,7 +3,17 @@ import { describe, expect, expectTypeOf, it, test } from 'vitest';
 import { z as z3 } from 'zod/v3';
 import { z as z4 } from 'zod/v4';
 
-import { $BooleanLike, $NumberLike, $Uint8ArrayLike, $UrlLike, isZodType, isZodTypeLike, safeParse } from '../zod.js';
+import {
+  $$Function,
+  $AnyFunction,
+  $BooleanLike,
+  $NumberLike,
+  $Uint8ArrayLike,
+  $UrlLike,
+  isZodType,
+  isZodTypeLike,
+  safeParse
+} from '../zod.js';
 
 import type {
   ZodErrorLike,
@@ -213,6 +223,41 @@ describe('$Uint8ArrayLike', () => {
     expect(result.success).toBe(true);
     expect(result.data).toBeInstanceOf(Uint8Array);
     expect([...result.data!]).toEqual([7, 8, 9]);
+  });
+});
+
+describe('$AnyFunction', () => {
+  it('should be correctly typed', () => {
+    expectTypeOf<z4.infer<typeof $AnyFunction>>().toEqualTypeOf<(...args: any[]) => any>();
+  });
+  it('should fail to validate a non-function', () => {
+    expect($AnyFunction.safeParse('').success).toBe(false);
+  });
+  it('should validate a function', () => {
+    expect($AnyFunction.safeParse(safeParse).success).toBe(true);
+  });
+});
+
+describe('$$Function', () => {
+  const $Schema = $$Function({ input: [z4.number(), z4.number()], output: z4.number() });
+  it('should be correctly typed', () => {
+    expectTypeOf<z4.infer<typeof $Schema>>().toEqualTypeOf<(arg_0: number, arg_1: number) => number>();
+  });
+  it('should fail to validate a non-function', () => {
+    expect($Schema.safeParse('').success).toBe(false);
+  });
+  it('should return a function that throws when called with the incorrect number of arguments', () => {
+    const fn = $Schema.parse((..._args: any[]) => 0) as (...args: any[]) => number;
+    expect(() => fn(1)).toThrow();
+    expect(() => fn(1, 2, 3)).toThrow();
+  });
+  it('should return a function that throws when it returns an invalid value', () => {
+    const fn = $Schema.parse((..._args: any[]) => 'hello') as (...args: any[]) => any;
+    expect(() => fn(1, 2)).toThrow();
+  });
+  it('should return a function that returns a valid value, when called with valid inputs', () => {
+    const fn = $Schema.parse((a: number, b: number) => a + b);
+    expect(fn(1, 2)).toBe(3);
   });
 });
 
