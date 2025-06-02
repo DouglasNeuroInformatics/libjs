@@ -121,18 +121,24 @@ export const $Uint8ArrayLike: z4.ZodType<Uint8Array> = z4
 
 export const $AnyFunction = z4.custom<(...args: any[]) => any>((arg) => typeof arg === 'function', 'must be function');
 
-export const $$Function = <TInput extends z4.ZodType<unknown[], unknown[]>, TOutput extends z4.ZodType>(params?: {
+export const $$Function = <TInput extends [z4.ZodType, ...z4.ZodType[]], TOutput extends z4.ZodType>({
+  input,
+  output
+}: {
   input: TInput;
   output: TOutput;
-}): z4.ZodType<(...args: z4.output<TInput>) => z4.output<TOutput>> => {
-  const $Schema = z4.function(params);
+}): z4.ZodType<(...args: z4.output<z4.ZodTuple<TInput, null>>) => z4.output<TOutput>> => {
+  const $Schema = z4.function({
+    input: z4.tuple(input),
+    output
+  });
   return z4.custom().transform((arg, ctx) => {
     if (typeof arg !== 'function') {
       ctx.addIssue('Must be function');
       return z4.NEVER;
     }
     return $Schema.implement(arg as (...args: any[]) => any);
-  }) as z4.ZodType<(...args: z4.output<TInput>) => z4.output<TOutput>>;
+  }) as z4.ZodType<(...args: z4.output<z4.ZodTuple<TInput, null>>) => z4.output<TOutput>>;
 };
 
 export function safeParse<TSchema extends z4.ZodTypeAny>(

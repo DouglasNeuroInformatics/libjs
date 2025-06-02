@@ -239,7 +239,7 @@ describe('$AnyFunction', () => {
 });
 
 describe('$$Function', () => {
-  const $Schema = $$Function({ input: z4.tuple([z4.number(), z4.number()]), output: z4.number() });
+  const $Schema = $$Function({ input: [z4.number(), z4.number()], output: z4.number() });
   it('should be correctly typed', () => {
     expectTypeOf<z4.infer<typeof $Schema>>().toEqualTypeOf<(arg_0: number, arg_1: number) => number>();
   });
