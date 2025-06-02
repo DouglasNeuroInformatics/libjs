@@ -5,6 +5,7 @@ import { z as z4 } from 'zod/v4';
 
 import {
   $$Function,
+  $AnyFunction,
   $BooleanLike,
   $NumberLike,
   $Uint8ArrayLike,
@@ -222,6 +223,18 @@ describe('$Uint8ArrayLike', () => {
     expect(result.success).toBe(true);
     expect(result.data).toBeInstanceOf(Uint8Array);
     expect([...result.data!]).toEqual([7, 8, 9]);
+  });
+});
+
+describe('$AnyFunction', () => {
+  it('should be correctly typed', () => {
+    expectTypeOf<z4.infer<typeof $AnyFunction>>().toEqualTypeOf<(...args: any[]) => any>();
+  });
+  it('should fail to validate a non-function', () => {
+    expect($AnyFunction.safeParse('').success).toBe(false);
+  });
+  it('should validate a function', () => {
+    expect($AnyFunction.safeParse(safeParse).success).toBe(true);
   });
 });
 

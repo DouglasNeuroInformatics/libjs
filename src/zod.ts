@@ -119,6 +119,8 @@ export const $Uint8ArrayLike: z4.ZodType<Uint8Array> = z4
     return arg;
   });
 
+export const $AnyFunction = z4.custom<(...args: any[]) => any>((arg) => typeof arg === 'function', 'must be function');
+
 export const $$Function = <TInput extends z4.ZodType<unknown[], unknown[]>, TOutput extends z4.ZodTypeAny>(params?: {
   input: TInput;
   output: TOutput;
