@@ -3,7 +3,16 @@ import { describe, expect, expectTypeOf, it, test } from 'vitest';
 import { z as z3 } from 'zod/v3';
 import { z as z4 } from 'zod/v4';
 
-import { $BooleanLike, $NumberLike, $Uint8ArrayLike, $UrlLike, isZodType, isZodTypeLike, safeParse } from '../zod.js';
+import {
+  $$Function,
+  $BooleanLike,
+  $NumberLike,
+  $Uint8ArrayLike,
+  $UrlLike,
+  isZodType,
+  isZodTypeLike,
+  safeParse
+} from '../zod.js';
 
 import type {
   ZodErrorLike,
@@ -213,6 +222,16 @@ describe('$Uint8ArrayLike', () => {
     expect(result.success).toBe(true);
     expect(result.data).toBeInstanceOf(Uint8Array);
     expect([...result.data!]).toEqual([7, 8, 9]);
+  });
+});
+
+describe('$$Function', () => {
+  const $Schema = $$Function({ input: z4.tuple([z4.number(), z4.number()]), output: z4.number() });
+  it('should be correctly typed', () => {
+    expectTypeOf<z4.infer<typeof $Schema>>().toEqualTypeOf<(arg_0: number, arg_1: number) => number>();
+  });
+  it('should fail to validate a non-function', () => {
+    expect($Schema.safeParse('').success).toBe(false);
   });
 });
 
