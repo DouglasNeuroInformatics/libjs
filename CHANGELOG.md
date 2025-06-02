@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.0.2...v3.1.0) (2025-06-02)
+
+### Features
+
+* add $$Function helper to replicate Zod v3 behaviour ([2e89e26](https://github.com/DouglasNeuroInformatics/libjs/commit/2e89e2621223d20262ee6b534da4b307858a2a1e))
+* add $AnyFunction ([a8002f1](https://github.com/DouglasNeuroInformatics/libjs/commit/a8002f11e52125b2c17b069bf9172ac4d15c635d))
+
 ## [3.0.2](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.0.1...v3.0.2) (2025-05-30)
 
 ### Bug Fixes
