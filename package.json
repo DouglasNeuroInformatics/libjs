@@ -35,7 +35,7 @@
   },
   "peerDependencies": {
     "neverthrow": "^8.2.0",
-    "zod": "^3.25.x"
+    "zod": "^3.25.67"
   },
   "dependencies": {
     "clean-stack": "^5.2.0",
