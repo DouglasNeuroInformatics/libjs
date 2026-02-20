@@ -8,7 +8,7 @@ importers:
   .:
     dependencies:
       clean-stack:
-        specifier: ^5.2.0
+        specifier: ~5.2.0
         version: 5.2.0
       extract-stack:
         specifier: ^3.0.0
