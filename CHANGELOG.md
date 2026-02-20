@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.1.0...v3.1.1) (2026-02-20)
+
+### Bug Fixes
+
+* lock clean-stack to v5.2 ([a320ca6](https://github.com/DouglasNeuroInformatics/libjs/commit/a320ca660c0db25e2f76043403e563acee95062c))
+* set zod peer to ^3.25.67 to make sure cross-realm Object prototype fix is included ([257cd07](https://github.com/DouglasNeuroInformatics/libjs/commit/257cd07568d016ddf9f38c9f06c05c56bb98edfd))
+
 ## [3.1.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.0.2...v3.1.0) (2025-06-02)
 
 ### Features
