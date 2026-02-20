@@ -132,13 +132,14 @@ export const $$Function = <TInput extends [z4.ZodType, ...z4.ZodType[]], TOutput
     input: z4.tuple(input),
     output
   });
+
   return z4.custom().transform((arg, ctx) => {
     if (typeof arg !== 'function') {
       ctx.addIssue('Must be function');
       return z4.NEVER;
     }
     return $Schema.implement(arg as (...args: any[]) => any);
-  });
+  }) as z4.ZodType<(...args: z4.output<z4.ZodTuple<TInput, null>>) => z4.output<TOutput>>;
 };
 
 export function safeParse<TSchema extends z4.ZodTypeAny>(
