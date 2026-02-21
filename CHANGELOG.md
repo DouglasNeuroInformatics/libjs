@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.2.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.1.1...v3.2.0) (2026-02-21)
+
+### Features
+
+* add standalone formatError function ([dc52fea](https://github.com/DouglasNeuroInformatics/libjs/commit/dc52fea0d50d5889552dc7cf048e7392f39ed52d))
+
 ## [3.1.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.1.0...v3.1.1) (2026-02-20)
 
 ### Bug Fixes
