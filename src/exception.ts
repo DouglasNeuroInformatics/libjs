@@ -71,6 +71,34 @@ function parseStack(errorOrStack: Error | string | undefined): string[] {
   return extractStack.lines(cleanStack(stack, { pretty: true }));
 }
 
+function formatSingleError(err: Error & { details?: { [key: string]: unknown } }): string {
+  const result = [`${err.name}: ${err.message}`];
+  parseStack(err).forEach((line) => {
+    result.push(`    at ${line}`);
+  });
+  if (err.details) {
+    result.push(indentLines(`details: ${stringifyObject(err.details, { indent: '  ' })}`, 4));
+  }
+  return result.join('\n');
+}
+
+function formatError(error: Error & { details?: { [key: string]: unknown } }): string {
+  const causes: (Error & { details?: { [key: string]: unknown } })[] = [];
+  let cause: unknown = error.cause;
+  while (cause instanceof Error) {
+    causes.push(cause as Error & { details?: { [key: string]: unknown } });
+    cause = cause.cause;
+  }
+
+  const parts: string[] = [];
+  causes.toReversed().forEach((c) => {
+    parts.push(formatSingleError(c));
+    parts.push('\nThe above exception was the cause of the following exception:\n');
+  });
+  parts.push(formatSingleError(error));
+  return parts.join('\n');
+}
+
 function errorToJSON(error: Error, { includeStack = true }: { includeStack?: boolean } = {}): string {
   const serialize = (error: Error): { [key: string]: unknown } => {
     const { cause, stack, ...serialized } = serializeError(error);
@@ -109,34 +137,7 @@ abstract class BaseException<TParams extends ExceptionParams, TOptions extends E
   }
 
   override toString(): string {
-    const result: string[] = [];
-    this.extractCauses(this).forEach((error) => {
-      result.push(this.formatError(error));
-      result.push('\nThe above exception was the cause of the following exception:\n');
-    });
-    result.push(this.formatError(this));
-    return result.join('\n');
-  }
-
-  private extractCauses(error: Error): Error[] {
-    const errors: Error[] = [];
-    let cause: unknown = error.cause;
-    while (cause instanceof Error) {
-      errors.push(cause);
-      cause = cause.cause;
-    }
-    return errors.toReversed();
-  }
-
-  private formatError(error: Error & { details?: { [key: string]: unknown } }): string {
-    const result = [`${error.name}: ${error.message}`];
-    parseStack(error).forEach((line) => {
-      result.push(`    at ${line}`);
-    });
-    if (error.details) {
-      result.push(indentLines(`details: ${stringifyObject(error.details, { indent: '  ' })}`, 4));
-    }
-    return result.join('\n');
+    return formatError(this);
   }
 }
 
@@ -252,6 +253,7 @@ export {
   BaseException,
   errorToJSON,
   ExceptionBuilder,
+  formatError,
   OutOfRangeException,
   parseStack,
   RuntimeException,
