@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.2.1](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.2.0...v3.2.1) (2026-04-16)
+
+### Bug Fixes
+
+* add Zod v4 as accepted peer dep and update TypeScript to v6 ([b95c174](https://github.com/DouglasNeuroInformatics/libjs/commit/b95c174e919e6ed353e68e5893c44c34b3c48be4))
+
 ## [3.2.0](https://github.com/DouglasNeuroInformatics/libjs/compare/v3.1.1...v3.2.0) (2026-02-21)
 
 ### Features
